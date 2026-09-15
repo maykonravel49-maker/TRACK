@@ -1,4 +1,4 @@
-# TRACK 1.2
+# TRACK 1.2.1
 
 Versão instalável do TRACK para iPhone, Android e desktop.
 

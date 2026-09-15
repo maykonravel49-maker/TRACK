@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TRACK — 1.1</title>
+<title>TRACK — 1.2</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080808;color:#eee;font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
 .app{max-width:1100px;margin:auto;padding:24px 18px 60px}.top{height:60px;border-bottom:1px solid #252525;display:flex;align-items:center;justify-content:space-between}.logo{font-size:21px;font-weight:800;letter-spacing:-1px}.beta{font:10px monospace;color:#777;border:1px solid #333;padding:5px 8px}
@@ -106,7 +106,7 @@ body>.nav{display:none!important}
 }
 
 
-/* TRACK 1.1 — experimental home */
+/* TRACK 1.2 — experimental home */
 .new-home-top{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:10px 0 28px}
 .brand-mini{font-weight:800;letter-spacing:.18em;font-size:13px;color:#eee;margin-bottom:24px}
 .brand-mini span{font-weight:500;color:#555;font-size:10px}
@@ -326,7 +326,7 @@ body[data-active-page="customActivity"]::before{
 }
 
 
-/* TRACK 1.1 — Capas */
+/* TRACK 1.2 — Capas */
 .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:14px;margin-top:14px}
 .media-card{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:10px;min-width:0}
 .media-cover{width:100%;aspect-ratio:2/3;border-radius:12px;object-fit:cover;background:linear-gradient(145deg,#20232a,#101116);display:block}
@@ -336,6 +336,15 @@ body[data-active-page="customActivity"]::before{
 .cover-placeholder{display:flex;align-items:center;justify-content:center;font-size:30px;color:#8b8f99}
 .recent-cover{width:38px;height:52px;border-radius:8px;object-fit:cover;background:#17191e;flex:0 0 auto}
 .recent-row{display:flex;align-items:center;gap:11px}
+
+
+/* TRACK 1.2 — Galeria */
+.cover-picker{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.cover-picker input[type=file]{display:none}
+.cover-action{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.055);color:#eee;padding:10px 13px;border-radius:12px;font:inherit;cursor:pointer}
+.cover-action:active{transform:scale(.98)}
+.cover-preview{width:72px;height:96px;border-radius:12px;object-fit:cover;background:#17191e;border:1px solid rgba(255,255,255,.08)}
+.cover-edit{margin-top:8px;width:100%;font-size:12px;padding:8px 10px}
 
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
@@ -490,17 +499,145 @@ body[data-active-page="customActivity"]::before{
 </section>
 
 </main>
-<div class="note">TRACK 1.1 · seus dados ficam salvos neste dispositivo.</div>
+<div class="note">TRACK 1.2 · seus dados ficam salvos neste dispositivo.</div>
 </div>
 
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
 <script>
+
+/* =========================================================
+   TRACK 1.2 — CAPAS DA GALERIA / INDEXEDDB
+   As imagens ficam no aparelho, separadas do localStorage.
+   ========================================================= */
+const COVER_DB='track-media';
+const COVER_STORE='covers';
+
+function openCoverDB(){
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open(COVER_DB,1);
+    req.onupgradeneeded=()=> {
+      const db=req.result;
+      if(!db.objectStoreNames.contains(COVER_STORE)) db.createObjectStore(COVER_STORE);
+    };
+    req.onsuccess=()=>resolve(req.result);
+    req.onerror=()=>reject(req.error);
+  });
+}
+async function putCover(key, blob){
+  const db=await openCoverDB();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(COVER_STORE,'readwrite');
+    tx.objectStore(COVER_STORE).put(blob,key);
+    tx.oncomplete=()=>resolve();
+    tx.onerror=()=>reject(tx.error);
+  });
+}
+async function getCover(key){
+  if(!key) return null;
+  const db=await openCoverDB();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(COVER_STORE,'readonly');
+    const req=tx.objectStore(COVER_STORE).get(key);
+    req.onsuccess=()=>resolve(req.result||null);
+    req.onerror=()=>reject(req.error);
+  });
+}
+async function deleteCover(key){
+  if(!key) return;
+  const db=await openCoverDB();
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction(COVER_STORE,'readwrite');
+    tx.objectStore(COVER_STORE).delete(key);
+    tx.oncomplete=()=>resolve();
+    tx.onerror=()=>reject(tx.error);
+  });
+}
+function uid(prefix='media'){
+  return prefix+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
+}
+async function compressCover(file){
+  const bmp=await createImageBitmap(file);
+  const maxW=720,maxH=1080;
+  let w=bmp.width,h=bmp.height;
+  const scale=Math.min(1,maxW/w,maxH/h);
+  w=Math.max(1,Math.round(w*scale)); h=Math.max(1,Math.round(h*scale));
+  const c=document.createElement('canvas'); c.width=w; c.height=h;
+  c.getContext('2d').drawImage(bmp,0,0,w,h);
+  bmp.close?.();
+  return await new Promise(res=>c.toBlob(res,'image/jpeg',.82));
+}
+async function chooseCoverFromGallery(existingKey=''){
+  return new Promise(resolve=>{
+    const input=document.createElement('input');
+    input.type='file';
+    input.accept='image/*';
+    input.onchange=async()=>{
+      const file=input.files&&input.files[0];
+      if(!file){resolve(existingKey);return}
+      try{
+        const blob=await compressCover(file);
+        const key=existingKey||uid('cover');
+        await putCover(key,blob);
+        resolve(key);
+      }catch(e){
+        alert('Não foi possível salvar esta imagem.');
+        resolve(existingKey);
+      }
+    };
+    input.click();
+  });
+}
+async function coverUrlFor(item){
+  if(item?.coverKey){
+    const blob=await getCover(item.coverKey);
+    if(blob) return URL.createObjectURL(blob);
+  }
+  return item?.cover||item?.coverUrl||item?.image||'';
+}
+async function hydrateCoverImages(root=document){
+  const imgs=[...root.querySelectorAll('[data-cover-key]')];
+  await Promise.all(imgs.map(async img=>{
+    const key=img.dataset.coverKey;
+    if(!key)return;
+    const blob=await getCover(key);
+    if(blob){
+      if(img.dataset.objectUrl) URL.revokeObjectURL(img.dataset.objectUrl);
+      const u=URL.createObjectURL(blob);
+      img.src=u; img.dataset.objectUrl=u;
+    }
+  }));
+}
+function galleryCoverHTML(item,type='book'){
+  const legacy=coverSrc(item);
+  const cls=type==='game'?' game':'';
+  if(item?.coverKey) return `<img class="media-cover${cls}" data-cover-key="${esc(item.coverKey)}" alt="Capa">`;
+  if(legacy) return `<img class="media-cover${cls}" src="${esc(legacy)}" alt="Capa">`;
+  const emoji=type==='game'?'◇':type==='movie'?'▷':'▤';
+  return `<div class="media-cover${cls} cover-placeholder">${emoji}</div>`;
+}
+async function setItemCover(type,index){
+  const arr=type==='book'?s.books:type==='game'?s.games:s.movies;
+  const item=arr[index];
+  if(!item)return;
+  item.coverKey=await chooseCoverFromGallery(item.coverKey||'');
+  item.cover=''; item.coverUrl=''; item.image='';
+  save(); render(); setTimeout(()=>hydrateCoverImages(),0);
+}
+async function removeItemCover(type,index){
+  const arr=type==='book'?s.books:type==='game'?s.games:s.movies;
+  const item=arr[index];
+  if(!item)return;
+  if(item.coverKey) await deleteCover(item.coverKey);
+  item.coverKey=''; item.cover=''; item.coverUrl=''; item.image='';
+  save(); render();
+}
+
 /* =========================================================
    TRACK — VERSION / MIGRATIONS
    Futuras versões: altere APP_VERSION e adicione migrações
    sem apagar os dados já salvos pelo usuário.
    ========================================================= */
-const APP_VERSION='1.1.0';
+const APP_VERSION='1.2.0';
 const DATA_SCHEMA_VERSION=1;
 function runMigrations(state){
   // Espaço reservado para migrações futuras (1.1, 1.2, 2.0...)
@@ -530,6 +667,36 @@ render();
 }
 function changeMonth(d){s.month+=d;if(s.month<0){s.month=11;s.year--}if(s.month>11){s.month=0;s.year++}save();render()}
 
+
+function renderGalleryManagers(){
+  const configs=[
+    {page:'books',type:'book',arr:s.books||[],title:'Capas dos livros'},
+    {page:'games',type:'game',arr:s.games||[],title:'Capas dos jogos'},
+    {page:'movies',type:'movie',arr:s.movies||[],title:'Pôsteres dos filmes'}
+  ];
+  configs.forEach(c=>{
+    const page=document.getElementById(c.page);
+    if(!page)return;
+    let box=page.querySelector('.gallery-manager');
+    if(!box){
+      box=document.createElement('div');
+      box.className='card gallery-manager';
+      box.style.marginTop='16px';
+      page.appendChild(box);
+    }
+    box.innerHTML=`<div class="sectionTitle"><b>${c.title}</b><span class="muted">Escolha pela galeria do celular</span></div>
+      <div class="media-grid">${c.arr.map((x,i)=>`
+        <div class="media-card">
+          ${galleryCoverHTML(x,c.type)}
+          <div class="media-title">${esc(x.title||x.name|| (c.type==='book'?'Livro':c.type==='game'?'Jogo':'Filme'))}</div>
+          <button class="cover-action cover-edit" onclick="setItemCover('${c.type}',${i})">${x.coverKey||coverSrc(x)?'Trocar capa':'Escolher capa'}</button>
+          ${(x.coverKey||coverSrc(x))?`<button class="cover-action cover-edit" onclick="removeItemCover('${c.type}',${i})">Remover capa</button>`:''}
+        </div>`).join('') || '<div class="muted">Adicione um item primeiro. Depois escolha a capa aqui.</div>'}
+      </div>`;
+  });
+  hydrateCoverImages();
+}
+
 function renderCoverShelf(){
   const home=document.getElementById('home');
   if(!home) return;
@@ -546,7 +713,7 @@ function renderCoverShelf(){
   (s.games||[]).slice(-2).reverse().forEach(x=>items.push({x,t:'game',label:x.title||x.name||'Jogo'}));
   (s.movies||[]).slice(-2).reverse().forEach(x=>items.push({x,t:'movie',label:x.title||x.name||'Filme'}));
   box.innerHTML=`<div class="sectionTitle"><b>Recentes com capa</b><span class="muted">Livros · Jogos · Filmes</span></div>
-  <div class="media-grid">${items.slice(0,6).map(({x,t,label})=>`<div class="media-card">${coverHTML(x,t)}<div class="media-title">${esc(label)}</div><div class="media-sub">${t==='book'?'Livro':t==='game'?'Jogo':'Filme'}</div></div>`).join('') || '<div class="muted">Adicione uma capa ao cadastrar seus próximos itens.</div>'}</div>`;
+  <div class="media-grid">${items.slice(0,6).map(({x,t,label})=>`<div class="media-card">${galleryCoverHTML(x,t)}<div class="media-title">${esc(label)}</div><div class="media-sub">${t==='book'?'Livro':t==='game'?'Jogo':'Filme'}</div></div>`).join('') || '<div class="muted">Adicione uma capa ao cadastrar seus próximos itens.</div>'}</div>`;
 }
 
 function render(){let k=key(), books=s.books.filter(x=>x.month===k), money=s.money.filter(x=>x.month===k), games=s.games.filter(x=>x.month===k), movies=s.movies.filter(x=>x.month===k), pages=books.reduce((a,x)=>a+(x.read||0),0), total=money.reduce((a,x)=>a+x.value,0), gameHours=games.reduce((a,x)=>a+(x.hours||0),0), ratedGames=games.filter(x=>x.rating>0), gameAvg=ratedGames.length?ratedGames.reduce((a,x)=>a+x.rating,0)/ratedGames.length:0;
@@ -709,7 +876,7 @@ function deleteCustomEntry(id){s.customEntries=s.customEntries.filter(x=>x.id!==
 function togglePinMenu(){document.getElementById('pinMenu')?.classList.toggle('open')}
 function setPinnedStat(v){localStorage.setItem('trackPinnedStat',v);document.getElementById('pinMenu')?.classList.remove('open');render()}
 render();
-setTimeout(renderCoverShelf,0);
+setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages();},0);
 
 /* PWA: mantém o app instalável e prepara atualizações futuras. */
 if ('serviceWorker' in navigator) {
@@ -718,7 +885,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-document.addEventListener('click',()=>setTimeout(renderCoverShelf,0));
+document.addEventListener('click',()=>setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages();},0));
 </script>
 
 <nav class="bottom-nav" aria-label="Navegação principal">

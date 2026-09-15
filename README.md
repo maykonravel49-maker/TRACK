@@ -1,4 +1,4 @@
-# TRACK 1.0
+# TRACK 1.2
 
 Versão instalável do TRACK para iPhone, Android e desktop.
 
@@ -25,3 +25,7 @@ a migração em `runMigrations()` para manter os dados existentes.
 
 Ao publicar uma nova versão, altere também `CACHE_NAME` em `service-worker.js`
 (ex.: `track-v1.1.0`) para que os dispositivos recebam os arquivos novos.
+
+
+## TRACK 1.2
+Capas podem ser escolhidas diretamente da galeria do celular. As imagens são comprimidas e armazenadas localmente em IndexedDB.

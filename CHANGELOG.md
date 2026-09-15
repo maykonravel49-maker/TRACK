@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0
+- Escolher capas diretamente pela galeria do celular.
+- Capas de livros, jogos e filmes armazenadas em IndexedDB.
+- Compressão automática das imagens para economizar espaço.
+- Botões para trocar e remover capas.
+- Capas aparecem também na seção de recentes da Home.
+- Cache PWA atualizado para 1.2.
+
 ## 1.1.0
 - Suporte a capas para livros, jogos e filmes.
 - Nova seção visual de capas recentes na Home.

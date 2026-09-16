@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TRACK — 1.2</title>
+<title>TRACK — 1.2.1</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080808;color:#eee;font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
 .app{max-width:1100px;margin:auto;padding:24px 18px 60px}.top{height:60px;border-bottom:1px solid #252525;display:flex;align-items:center;justify-content:space-between}.logo{font-size:21px;font-weight:800;letter-spacing:-1px}.beta{font:10px monospace;color:#777;border:1px solid #333;padding:5px 8px}
@@ -346,6 +346,40 @@ body[data-active-page="customActivity"]::before{
 .cover-preview{width:72px;height:96px;border-radius:12px;object-fit:cover;background:#17191e;border:1px solid rgba(255,255,255,.08)}
 .cover-edit{margin-top:8px;width:100%;font-size:12px;padding:8px 10px}
 
+
+/* TRACK 1.2.1 — Tema claro/escuro */
+.theme-toggle{border:1px solid #303030;background:#171717;color:#ddd;border-radius:10px;padding:8px 11px;font-size:11px;cursor:pointer}
+body.light-theme{background:#f3f3f1;color:#151515}
+body.light-theme::before{background:radial-gradient(circle at 50% 16%,rgba(0,0,0,.025),transparent 52%)!important}
+body.light-theme .top{border-color:#d7d7d3}
+body.light-theme .beta{color:#777;border-color:#ccc}
+body.light-theme .theme-toggle,body.light-theme .month button,body.light-theme .smallbtn,body.light-theme .home-month-control,body.light-theme .home-month-control button{background:#fff;color:#333;border-color:#d5d5d2}
+body.light-theme .overview-card,body.light-theme .hero,body.light-theme .month-progress-card,body.light-theme .summary-card,body.light-theme .continue-card,body.light-theme .timeline-card,body.light-theme .pin-stat-card,body.light-theme .game-hero,body.light-theme .game-kpi,body.light-theme .game-card-new,body.light-theme .more-feature,body.light-theme .custom-activity-card,body.light-theme .custom-hero,body.light-theme .card,body.light-theme .row,body.light-theme .modal,body.light-theme #books .item{background:#fff;color:#151515;border-color:#d9d9d5}
+body.light-theme .progress-ring:before{background:#fff}
+body.light-theme .progress-ring{background:conic-gradient(#333 var(--p),#deded9 0)}
+body.light-theme .progress,body.light-theme .goal-track,body.light-theme .continue-track,body.light-theme .custom-progress-track{background:#deded9}
+body.light-theme .progress i,body.light-theme .goal-fill,body.light-theme .continue-fill,body.light-theme .custom-progress-track div{background:#555!important}
+body.light-theme .bottom-nav{background:rgba(250,250,248,.94);border-color:#d1d1ce;box-shadow:0 12px 35px rgba(0,0,0,.12)}
+body.light-theme .bottom-nav button{color:#777}
+body.light-theme .bottom-nav button.active,body.light-theme .bottom-nav .home-center.active{background:#e7e7e3!important;color:#111!important;box-shadow:inset 0 0 0 1px #d7d7d2!important}
+body.light-theme .field input,body.light-theme .field select{background:#fafaf8;color:#111;border-color:#ccc}
+body.light-theme .modal-actions button{background:#eee;color:#222;border-color:#ccc}
+body.light-theme .modal-actions .save,body.light-theme .add{background:#171717!important;color:#fff!important;border-color:#171717!important}
+body.light-theme .sub,body.light-theme .row-meta,body.light-theme .meta,body.light-theme .new-home-sub,body.light-theme .media-sub{color:#6d6d68}
+body.light-theme .media-card{background:#fff;border-color:#d9d9d5}
+body.light-theme .cover-action{background:#f0f0ed;color:#222;border-color:#d3d3cf}
+
+
+/* TRACK 1.2.1 — Configurações em Mais */
+.settings-panel{border:1px solid #292929;background:#141414;border-radius:19px;overflow:hidden;margin-bottom:24px}
+.settings-row{width:100%;border:0;background:transparent;color:#eee;display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;text-align:left;padding:14px 16px;cursor:pointer}
+.settings-row+.settings-row{border-top:1px solid #252525}
+.settings-icon{width:42px;height:42px;border:1px solid #303030;background:#1c1c1c;border-radius:12px;display:grid;place-items:center;color:#888}
+.settings-copy strong{display:block;font-size:13px}.settings-copy span{display:block;font-size:10px;color:#666;margin-top:4px}.settings-row>b{color:#555;font-size:20px}
+body.light-theme .settings-panel{background:#fff;border-color:#d9d9d5}
+body.light-theme .settings-row{color:#151515}body.light-theme .settings-row+.settings-row{border-color:#e3e3df}
+body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#555}
+
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
@@ -359,16 +393,16 @@ body[data-active-page="customActivity"]::before{
 </head>
 <body data-active-page="home">
 <div class="app">
-<header class="top"><div class="logo">TRACK</div><div class="beta">TRACK</div></header>
+<header class="top"><div class="logo">TRACK</div><div class="beta">1.2.1</div></header>
 
 
 <main>
 <section id="home" class="page active">
   <div class="new-home-top">
     <div>
-      <div class="brand-mini">TRACK <span>0.6</span></div>
-      <h1 id="greeting">Seu mês.</h1>
-      <div class="new-home-sub">Tudo o que você está acompanhando, em um só lugar.</div>
+      <div class="brand-mini">TRACK</div>
+      <h1 id="greeting">Bem-vindo ao TRACK.</h1>
+      <div class="new-home-sub">Seu progresso, suas histórias, seu TRACK.</div>
     </div>
     <div class="home-month-control">
       <button onclick="changeMonth(-1)">‹</button>
@@ -472,6 +506,16 @@ body[data-active-page="customActivity"]::before{
     </button>
   </div>
 
+  <div class="more-label">CONFIGURAÇÕES</div>
+  <div class="settings-panel">
+    <button class="settings-row" onclick="openChangeName()">
+      <div class="settings-icon">Aa</div><div class="settings-copy"><strong>Trocar nome</strong><span id="profileNameMeta">Personalize sua saudação</span></div><b>›</b>
+    </button>
+    <button class="settings-row" onclick="toggleTheme()">
+      <div class="settings-icon">◐</div><div class="settings-copy"><strong>Tema</strong><span id="themeSettingMeta">Escuro</span></div><b>›</b>
+    </button>
+  </div>
+
   <div class="more-label">ATIVIDADES PERSONALIZADAS</div>
   <div class="custom-activities" id="customActivities"></div>
 </section>
@@ -499,11 +543,28 @@ body[data-active-page="customActivity"]::before{
 </section>
 
 </main>
-<div class="note">TRACK 1.2 · seus dados ficam salvos neste dispositivo.</div>
+<div class="note">TRACK 1.2.1 · seus dados ficam salvos neste dispositivo.</div>
 </div>
 
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
 <script>
+
+
+function applyTheme(theme){
+  const light=theme==='light';
+  document.body.classList.toggle('light-theme',light);
+  const btn=document.getElementById('themeToggle');
+  if(btn) btn.textContent=light?'☾ Tema escuro':'☀ Tema claro';
+  const settingMeta=document.getElementById('themeSettingMeta');
+  if(settingMeta) settingMeta.textContent=light?'Claro':'Escuro';
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content',light?'#f3f3f1':'#0e0f12');
+}
+function toggleTheme(){
+  const next=document.body.classList.contains('light-theme')?'dark':'light';
+  localStorage.setItem('trackTheme',next);
+  applyTheme(next);
+}
+applyTheme(localStorage.getItem('trackTheme')||'dark');
 
 /* =========================================================
    TRACK 1.2 — CAPAS DA GALERIA / INDEXEDDB
@@ -556,16 +617,15 @@ function uid(prefix='media'){
   return prefix+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
 }
 async function compressCover(file){
-  const bmp=await createImageBitmap(file);
+  const dataUrl=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(file)});
+  const img=await new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=dataUrl});
   const maxW=720,maxH=1080;
-  let w=bmp.width,h=bmp.height;
-  const scale=Math.min(1,maxW/w,maxH/h);
-  w=Math.max(1,Math.round(w*scale)); h=Math.max(1,Math.round(h*scale));
-  const c=document.createElement('canvas'); c.width=w; c.height=h;
-  c.getContext('2d').drawImage(bmp,0,0,w,h);
-  bmp.close?.();
-  return await new Promise(res=>c.toBlob(res,'image/jpeg',.82));
+  const scale=Math.min(1,maxW/img.naturalWidth,maxH/img.naturalHeight);
+  const w=Math.max(1,Math.round(img.naturalWidth*scale)),h=Math.max(1,Math.round(img.naturalHeight*scale));
+  const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+  return await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('Falha ao processar imagem')),'image/jpeg',.82));
 }
+
 async function chooseCoverFromGallery(existingKey=''){
   return new Promise(resolve=>{
     const input=document.createElement('input');
@@ -607,6 +667,9 @@ async function hydrateCoverImages(root=document){
     }
   }));
 }
+function coverSrc(item){return item?.cover||item?.coverUrl||item?.image||''}
+let pendingCoverKey='';
+
 function galleryCoverHTML(item,type='book'){
   const legacy=coverSrc(item);
   const cls=type==='game'?' game':'';
@@ -656,6 +719,15 @@ let activeCustomId=null;
 const save=()=>localStorage.setItem('trackBeta2',JSON.stringify(s)); const key=()=>s.year+'-'+String(s.month+1).padStart(2,'0');
 function fmt(v){return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
 function monthText(){return months[s.month]+' '+s.year}
+function getProfileName(){return (localStorage.getItem('trackUserName')||'').trim()}
+function updateGreeting(){const el=document.getElementById('greeting');if(!el)return;const name=getProfileName();const h=new Date().getHours();const saudacao=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';el.textContent=name?saudacao+', '+name+'.':'Bem-vindo ao TRACK.';const meta=document.getElementById('profileNameMeta');if(meta)meta.textContent=name?'Nome atual: '+name:'Defina seu nome';}
+function showNameSetup(firstTime=false){
+ modal.innerHTML=`<h2>${firstTime?'Bem-vindo ao TRACK':'Trocar nome'}</h2><div class="sub" style="margin:-10px 0 18px">${firstTime?'Como você quer ser chamado?':'Digite o nome que aparecerá na sua HOME.'}</div><div class="field"><label>SEU NOME</label><input id="profileNameInput" maxlength="30" autocomplete="name" placeholder="Ex.: Maykon" value="${esc(getProfileName())}"></div><div class="modal-actions">${firstTime?'':'<button onclick="closeM()">Cancelar</button>'}<button class="save" onclick="saveProfileName(${firstTime?'true':'false'})">Salvar nome</button></div>`;
+ overlay.style.display='flex';setTimeout(()=>document.getElementById('profileNameInput')?.focus(),50);
+}
+function saveProfileName(firstTime=false){const input=document.getElementById('profileNameInput');const name=(input?.value||'').trim();if(!name){input?.focus();return}localStorage.setItem('trackUserName',name.slice(0,30));closeM();updateGreeting();render()}
+function openChangeName(){showNameSetup(false)}
+function ensureNameSetup(){if(!getProfileName())setTimeout(()=>showNameSetup(true),120)}
 function go(p){
 document.body.dataset.activePage=p;
 document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
@@ -716,7 +788,7 @@ function renderCoverShelf(){
   <div class="media-grid">${items.slice(0,6).map(({x,t,label})=>`<div class="media-card">${galleryCoverHTML(x,t)}<div class="media-title">${esc(label)}</div><div class="media-sub">${t==='book'?'Livro':t==='game'?'Jogo':'Filme'}</div></div>`).join('') || '<div class="muted">Adicione uma capa ao cadastrar seus próximos itens.</div>'}</div>`;
 }
 
-function render(){let k=key(), books=s.books.filter(x=>x.month===k), money=s.money.filter(x=>x.month===k), games=s.games.filter(x=>x.month===k), movies=s.movies.filter(x=>x.month===k), pages=books.reduce((a,x)=>a+(x.read||0),0), total=money.reduce((a,x)=>a+x.value,0), gameHours=games.reduce((a,x)=>a+(x.hours||0),0), ratedGames=games.filter(x=>x.rating>0), gameAvg=ratedGames.length?ratedGames.reduce((a,x)=>a+x.rating,0)/ratedGames.length:0;
+function render(){updateGreeting();let k=key(), books=s.books.filter(x=>x.month===k), money=s.money.filter(x=>x.month===k), games=s.games.filter(x=>x.month===k), movies=s.movies.filter(x=>x.month===k), pages=books.reduce((a,x)=>a+(x.read||0),0), total=money.reduce((a,x)=>a+x.value,0), gameHours=games.reduce((a,x)=>a+(x.hours||0),0), ratedGames=games.filter(x=>x.rating>0), gameAvg=ratedGames.length?ratedGames.reduce((a,x)=>a+x.rating,0)/ratedGames.length:0;
 document.querySelectorAll('#homeMonth,#bookMonth,#moneyMonth,#gameMonth,#movieMonth').forEach(x=>x.textContent=monthText());
 hMoney.textContent=fmt(total);hBooks.innerHTML=books.length+' <span class="unit">livros</span>';hPages.innerHTML=pages+' <span class="unit">páginas</span>';hGames.innerHTML=games.length+' <span class="unit">jogos</span>';
 bCount.textContent=books.length;bPages.textContent=pages;bGoal.textContent=s.bookGoal||'—';bGoalText.textContent=s.bookGoal?books.length+' de '+s.bookGoal:'Defina uma meta no código desta beta';bProgress.style.width=Math.min(100,(books.length/(s.bookGoal||1))*100)+'%';
@@ -822,20 +894,30 @@ if(document.getElementById('progressBooks')){
 }
 
 }
-function openBook(){modal.innerHTML=`<h2>Adicionar livro</h2><div class="field"><label>TÍTULO</label><input id="f1"></div><div class="field"><label>AUTOR</label><input id="f2"></div><div class="field"><label>TOTAL DE PÁGINAS</label><input id="f3" type="number" min="0"></div><div class="field"><label>PÁGINAS LIDAS</label><input id="f4" type="number" min="0"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addBook()">Salvar</button></div>`;overlay.style.display='flex'}
-function addBook(){const cover=prompt('Link da capa (opcional):')||'';let n=f1.value.trim(),p=+f3.value||0,r=Math.min(+f4.value||0,p);if(!n)return;s.books.push({cover,name:n,author:f2.value.trim(),pages:p,read:r,month:key()});save();closeM();render()}
+function coverPickerField(){return `<div class="field"><label>CAPA</label><div class="cover-picker"><button type="button" class="cover-action" onclick="pickPendingCover()">Escolher pela galeria</button><span id="coverPickedText" style="font-size:11px;color:#777">Nenhuma imagem escolhida</span></div><img id="coverPreviewModal" class="cover-preview" style="display:none;margin-top:10px" alt="Prévia da capa"></div>`}
+async function pickPendingCover(){
+  const key=await chooseCoverFromGallery(pendingCoverKey||'');
+  if(!key)return;
+  pendingCoverKey=key;
+  const blob=await getCover(key);if(!blob)return;
+  const img=document.getElementById('coverPreviewModal');const txt=document.getElementById('coverPickedText');
+  if(img){if(img.dataset.objectUrl)URL.revokeObjectURL(img.dataset.objectUrl);const u=URL.createObjectURL(blob);img.src=u;img.dataset.objectUrl=u;img.style.display='block'}
+  if(txt)txt.textContent='Imagem selecionada ✓';
+}
+function openBook(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar livro</h2><div class="field"><label>TÍTULO</label><input id="f1"></div><div class="field"><label>AUTOR</label><input id="f2"></div><div class="field"><label>TOTAL DE PÁGINAS</label><input id="f3" type="number" min="0"></div><div class="field"><label>PÁGINAS LIDAS</label><input id="f4" type="number" min="0"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addBook()">Salvar</button></div>`;overlay.style.display='flex'}
+function addBook(){let n=f1.value.trim(),p=+f3.value||0,r=Math.min(+f4.value||0,p);if(!n)return;s.books.push({coverKey:pendingCoverKey,name:n,author:f2.value.trim(),pages:p,read:r,month:key()});pendingCoverKey='';save();closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
 function openMoney(){modal.innerHTML=`<h2>Adicionar gasto</h2><div class="field"><label>DESCRIÇÃO</label><input id="f1" placeholder="Ex.: Mercado"></div><div class="field"><label>VALOR</label><input id="f2" type="number" step=".01" min="0" placeholder="0,00"></div><div class="field"><label>CATEGORIA</label><input id="f3" placeholder="Ex.: Alimentação"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMoney()">Salvar</button></div>`;overlay.style.display='flex'}
 function addMoney(){let d=f1.value.trim(),v=+f2.value||0;if(!d||v<=0)return;s.money.push({desc:d,value:v,cat:f3.value.trim(),date:new Date().toLocaleDateString('pt-BR'),month:key()});save();closeM();render()}
 function deleteBook(i){if(confirm('Excluir este livro?')){s.books.splice(i,1);save();render()}}
 function deleteMoney(i){if(confirm('Excluir este gasto?')){s.money.splice(i,1);save();render()}}
 
-function openGame(){modal.innerHTML=`<h2>Adicionar jogo zerado</h2><div class="field"><label>NOME DO JOGO</label><input id="f1" placeholder="Ex.: Dark Souls"></div><div class="field"><label>PLATAFORMA</label><input id="f2" placeholder="Ex.: PC, PS5, Xbox"></div><div class="field"><label>HORAS JOGADAS</label><input id="f3" type="number" step=".1" min="0" placeholder="0"></div><div class="field"><label>NOTA (0 A 10)</label><input id="f4" type="number" step=".1" min="0" max="10" placeholder="10"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addGame()">Salvar</button></div>`;overlay.style.display='flex'}
-function addGame(){const cover=prompt('Link da capa do jogo (opcional):')||'';let n=f1.value.trim(),h=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.games.push({cover,name:n,platform:f2.value.trim(),hours:h,rating:r,month:key()});save();closeM();render()}
+function openGame(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar jogo zerado</h2><div class="field"><label>NOME DO JOGO</label><input id="f1" placeholder="Ex.: Dark Souls"></div><div class="field"><label>PLATAFORMA</label><input id="f2" placeholder="Ex.: PC, PS5, Xbox"></div><div class="field"><label>HORAS JOGADAS</label><input id="f3" type="number" step=".1" min="0" placeholder="0"></div><div class="field"><label>NOTA (0 A 10)</label><input id="f4" type="number" step=".1" min="0" max="10" placeholder="10"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addGame()">Salvar</button></div>`;overlay.style.display='flex'}
+function addGame(){let n=f1.value.trim(),h=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.games.push({coverKey:pendingCoverKey,name:n,platform:f2.value.trim(),hours:h,rating:r,month:key()});pendingCoverKey='';save();closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
 function deleteGame(i){if(confirm('Excluir este jogo?')){s.games.splice(i,1);save();render()}}
 
 
-function openMovie(){modal.innerHTML=`<h2>Adicionar filme visto</h2><div class="field"><label>NOME DO FILME</label><input id="f1" placeholder="Ex.: Interestelar"></div><div class="field"><label>ANO</label><input id="f2" type="number" min="1888" max="2100" placeholder="2026"></div><div class="field"><label>DURAÇÃO (MINUTOS)</label><input id="f3" type="number" min="0" placeholder="120"></div><div class="field"><label>NOTA (0 A 10)</label><input id="f4" type="number" step=".1" min="0" max="10" placeholder="10"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMovie()">Salvar</button></div>`;overlay.style.display='flex'}
-function addMovie(){const cover=prompt('Link do pôster (opcional):')||'';let n=f1.value.trim(),y=+f2.value||0,min=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.movies.push({cover,name:n,year:y,minutes:min,rating:r,month:key()});save();closeM();render()}
+function openMovie(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar filme visto</h2><div class="field"><label>NOME DO FILME</label><input id="f1" placeholder="Ex.: Interestelar"></div><div class="field"><label>ANO</label><input id="f2" type="number" min="1888" max="2100" placeholder="2026"></div><div class="field"><label>DURAÇÃO (MINUTOS)</label><input id="f3" type="number" min="0" placeholder="120"></div><div class="field"><label>NOTA (0 A 10)</label><input id="f4" type="number" step=".1" min="0" max="10" placeholder="10"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMovie()">Salvar</button></div>`;overlay.style.display='flex'}
+function addMovie(){let n=f1.value.trim(),y=+f2.value||0,min=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.movies.push({coverKey:pendingCoverKey,name:n,year:y,minutes:min,rating:r,month:key()});pendingCoverKey='';save();closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
 function deleteMovie(i){if(confirm('Excluir este filme?')){s.movies.splice(i,1);save();render()}}
 
 function closeM(){overlay.style.display='none'}
@@ -876,6 +958,8 @@ function deleteCustomEntry(id){s.customEntries=s.customEntries.filter(x=>x.id!==
 function togglePinMenu(){document.getElementById('pinMenu')?.classList.toggle('open')}
 function setPinnedStat(v){localStorage.setItem('trackPinnedStat',v);document.getElementById('pinMenu')?.classList.remove('open');render()}
 render();
+applyTheme(localStorage.getItem('trackTheme')||'dark');
+ensureNameSetup();
 setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages();},0);
 
 /* PWA: mantém o app instalável e prepara atualizações futuras. */

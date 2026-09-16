@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TRACK — 1.4 Beta Social Fix</title>
+<title>TRACK — 1.5 Beta Social Feed</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080808;color:#eee;font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
 .app{max-width:1100px;margin:auto;padding:24px 18px 60px}.top{height:60px;border-bottom:1px solid #252525;display:flex;align-items:center;justify-content:space-between}.logo{font-size:21px;font-weight:800;letter-spacing:-1px}.beta{font:10px monospace;color:#777;border:1px solid #333;padding:5px 8px}
@@ -484,6 +484,13 @@ body.light-theme .sr-profile-sheet{background:#fff;border-color:#d7d7d2}body.lig
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0e0f12">
 <meta name="apple-mobile-web-app-capable" content="yes">
+
+/* TRACK 1.5 Beta — Feed social */
+.social-feed-item{display:grid;grid-template-columns:44px 1fr;gap:11px;align-items:start;border:1px solid #292929;background:#151515;border-radius:16px;padding:12px;margin-bottom:9px}
+.social-feed-avatar{width:44px;height:44px;border-radius:14px;background:#202020;border:1px solid #303030;display:grid;place-items:center;font-weight:800;overflow:hidden}.social-feed-avatar img{width:100%;height:100%;object-fit:cover}
+.social-feed-copy{min-width:0}.social-feed-copy strong{font-size:13px}.social-feed-copy .handle{color:#666;font-size:10px;margin-left:5px}.social-feed-text{font-size:12px;color:#aaa;margin-top:5px;line-height:1.45}.social-feed-text b{color:#eee}.social-feed-time{font-size:9px;color:#5f5f5f;margin-top:7px}.social-feed-icon{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid #303030;border-radius:7px;margin-right:6px;color:#888}.social-feed-refresh{border:1px solid #303030;background:#1b1b1b;color:#bbb;border-radius:10px;padding:8px 10px;font-size:10px;cursor:pointer}.social-feed-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 0 12px}.social-feed-head span{font-size:10px;color:#666}.social-feed-note{border:1px dashed #303030;border-radius:14px;padding:13px;color:#777;font-size:10px;line-height:1.5;margin-bottom:10px}
+body.light-theme .social-feed-item{background:#fff;border-color:#d8d8d4}body.light-theme .social-feed-avatar{background:#f1f1ee;border-color:#ddd}body.light-theme .social-feed-text{color:#555}body.light-theme .social-feed-text b{color:#111}body.light-theme .social-feed-refresh{background:#f2f2ef;color:#444;border-color:#d8d8d4}
+
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TRACK">
 
@@ -520,12 +527,14 @@ body.light-theme .sr-profile-sheet{background:#fff;border-color:#d7d7d2}body.lig
 <div class="friends-overlay" id="socialRebuildOverlay" onclick="if(event.target===this)closeSocialRebuild()">
  <div class="friends-sheet" style="min-height:420px">
   <div class="friends-head"><div><div class="library-detail-type">TRACK SOCIAL · REBUILD · PERFIL SEPARADO</div><h2>Amigos</h2></div><button class="friends-close" type="button" onclick="closeSocialRebuild()">×</button></div>
-  <div class="friend-tabs">
-   <button id="srTabFriends" type="button" onclick="socialRebuildTab('friends')">Meus amigos</button>
+  <div class="friend-tabs" style="grid-template-columns:repeat(4,1fr)">
+   <button id="srTabFeed" type="button" onclick="socialRebuildTab('feed')">Atividades</button>
+   <button id="srTabFriends" type="button" onclick="socialRebuildTab('friends')">Amigos</button>
    <button id="srTabRequests" type="button" onclick="socialRebuildTab('requests')">Pedidos <span id="srRequestCount"></span></button>
    <button id="srTabAdd" type="button" onclick="socialRebuildTab('add')">Adicionar</button>
   </div>
-  <div id="srPanelFriends"></div>
+  <div id="srPanelFeed"><div class="friend-empty">Carregando atividades…</div></div>
+  <div id="srPanelFriends" style="display:none"></div>
   <div id="srPanelRequests" style="display:none"></div>
   <div id="srPanelAdd" style="display:none">
    <div class="friends-section-label">ENCONTRAR PESSOAS</div>
@@ -908,7 +917,7 @@ async function ensureCloudProfile(){if(!trackSession?.user)return null;const u=t
 async function syncCloudProfile(name,username,bio){if(!trackSession?.user)return {ok:true};const {error}=await supabaseClient.from('profiles').update({display_name:name,username,bio}).eq('id',trackSession.user.id);if(error)return {ok:false,error};return {ok:true}}
 async function initTrackCloud(){if(!supabaseClient)return;const {data}=await supabaseClient.auth.getSession();trackSession=data.session||null;refreshAccountUI();if(trackSession)Promise.race([ensureCloudProfile(),new Promise(r=>setTimeout(()=>r(null),5000))]).catch(console.warn);supabaseClient.auth.onAuthStateChange(async(_event,session)=>{trackSession=session||null;if(trackSession)setTimeout(()=>ensureCloudProfile(),0);refreshAccountUI()})}
 
-const APP_VERSION='1.4.0-beta';
+const APP_VERSION='1.5.0-beta';
 const DATA_SCHEMA_VERSION=1;
 function runMigrations(state){
   // Espaço reservado para migrações futuras (1.1, 1.2, 2.0...)
@@ -1122,19 +1131,19 @@ async function pickPendingCover(){
   if(txt)txt.textContent='Imagem selecionada ✓';
 }
 function openBook(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar livro</h2><div class="field"><label>TÍTULO</label><input id="f1"></div><div class="field"><label>AUTOR</label><input id="f2"></div><div class="field"><label>TOTAL DE PÁGINAS</label><input id="f3" type="number" min="0"></div><div class="field"><label>PÁGINAS LIDAS</label><input id="f4" type="number" min="0"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addBook()">Salvar</button></div>`;overlay.style.display='flex'}
-function addBook(){let n=f1.value.trim(),p=+f3.value||0,r=Math.min(+f4.value||0,p);if(!n)return;s.books.push({coverKey:pendingCoverKey,name:n,author:f2.value.trim(),pages:p,read:r,month:key()});pendingCoverKey='';save();closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
+function addBook(){let n=f1.value.trim(),p=+f3.value||0,r=Math.min(+f4.value||0,p);if(!n)return;s.books.push({coverKey:pendingCoverKey,name:n,author:f2.value.trim(),pages:p,read:r,month:key()});pendingCoverKey='';save();publishSocialActivity(r>=p&&p>0?'book_finished':'book_added',n,{author:f2.value.trim()});closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
 function openMoney(){modal.innerHTML=`<h2>Adicionar gasto</h2><div class="field"><label>DESCRIÇÃO</label><input id="f1" placeholder="Ex.: Mercado"></div><div class="field"><label>VALOR</label><input id="f2" type="number" step=".01" min="0" placeholder="0,00"></div><div class="field"><label>CATEGORIA</label><input id="f3" placeholder="Ex.: Alimentação"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMoney()">Salvar</button></div>`;overlay.style.display='flex'}
 function addMoney(){let d=f1.value.trim(),v=+f2.value||0;if(!d||v<=0)return;s.money.push({desc:d,value:v,cat:f3.value.trim(),date:new Date().toLocaleDateString('pt-BR'),month:key()});save();closeM();render()}
 function deleteBook(i){if(confirm('Excluir este livro?')){s.books.splice(i,1);save();render()}}
 function deleteMoney(i){if(confirm('Excluir este gasto?')){s.money.splice(i,1);save();render()}}
 
 function openGame(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar jogo zerado</h2><div class="field"><label>NOME DO JOGO</label><input id="f1" placeholder="Ex.: Dark Souls"></div><div class="field"><label>PLATAFORMA</label><input id="f2" placeholder="Ex.: PC, PS5, Xbox"></div><div class="field"><label>HORAS JOGADAS</label><input id="f3" type="number" step=".1" min="0" placeholder="0"></div><div class="field"><label>NOTA (0 A 10)</label><input id="f4" type="number" step=".1" min="0" max="10" placeholder="10"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addGame()">Salvar</button></div>`;overlay.style.display='flex'}
-function addGame(){let n=f1.value.trim(),h=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.games.push({coverKey:pendingCoverKey,name:n,platform:f2.value.trim(),hours:h,rating:r,month:key()});pendingCoverKey='';save();closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
+function addGame(){let n=f1.value.trim(),h=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.games.push({coverKey:pendingCoverKey,name:n,platform:f2.value.trim(),hours:h,rating:r,month:key()});pendingCoverKey='';save();publishSocialActivity('game_finished',n,{platform:f2.value.trim()});closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
 function deleteGame(i){if(confirm('Excluir este jogo?')){s.games.splice(i,1);save();render()}}
 
 
 function openMovie(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar filme visto</h2><div class="field"><label>NOME DO FILME</label><input id="f1" placeholder="Ex.: Interestelar"></div><div class="field"><label>ANO</label><input id="f2" type="number" min="1888" max="2100" placeholder="2026"></div><div class="field"><label>DURAÇÃO (MINUTOS)</label><input id="f3" type="number" min="0" placeholder="120"></div><div class="field"><label>NOTA (0 A 10)</label><input id="f4" type="number" step=".1" min="0" max="10" placeholder="10"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMovie()">Salvar</button></div>`;overlay.style.display='flex'}
-function addMovie(){let n=f1.value.trim(),y=+f2.value||0,min=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.movies.push({coverKey:pendingCoverKey,name:n,year:y,minutes:min,rating:r,month:key()});pendingCoverKey='';save();closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
+function addMovie(){let n=f1.value.trim(),y=+f2.value||0,min=+f3.value||0,r=Math.max(0,Math.min(10,+f4.value||0));if(!n)return;s.movies.push({coverKey:pendingCoverKey,name:n,year:y,minutes:min,rating:r,month:key()});pendingCoverKey='';save();publishSocialActivity('movie_watched',n,{year:y});closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
 function deleteMovie(i){if(confirm('Excluir este filme?')){s.movies.splice(i,1);save();render()}}
 
 function closeM(){overlay.style.display='none'}
@@ -1278,13 +1287,14 @@ document.addEventListener('click',()=>setTimeout(()=>{renderCoverShelf();renderG
 function srEsc(v){return esc(String(v??''))}
 function srAvatar(p){const n=(p.display_name||p.username||'?').trim();const ini=n.split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();return `<div class="friend-avatar">${srEsc(ini||'?')}</div>`}
 function srRow(p,actions='',note=''){return `<div class="friend-row">${srAvatar(p)}<div class="friend-copy"><strong>${srEsc(p.display_name||p.username||'Usuário')}</strong><span>@${srEsc(p.username||'usuario')}</span>${note?`<div class="friend-request-note">${srEsc(note)}</div>`:''}</div><div class="friend-actions">${actions}</div></div>`}
-function openSocialRebuild(){document.getElementById('topMenu')?.classList.remove('open');document.getElementById('socialRebuildOverlay')?.classList.add('open');document.body.style.overflow='hidden';socialRebuildTab('friends')}
+function openSocialRebuild(){document.getElementById('topMenu')?.classList.remove('open');document.getElementById('socialRebuildOverlay')?.classList.add('open');document.body.style.overflow='hidden';socialRebuildTab('feed')}
 function closeSocialRebuild(){document.getElementById('socialRebuildOverlay')?.classList.remove('open');document.body.style.overflow=''}
 function socialRebuildTab(tab){
- const map={friends:'srPanelFriends',requests:'srPanelRequests',add:'srPanelAdd'};
+ const map={feed:'srPanelFeed',friends:'srPanelFriends',requests:'srPanelRequests',add:'srPanelAdd'};
  Object.entries(map).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.style.display=k===tab?'block':'none'});
- ['friends','requests','add'].forEach(k=>document.getElementById('srTab'+k[0].toUpperCase()+k.slice(1))?.classList.toggle('active',k===tab));
+ ['feed','friends','requests','add'].forEach(k=>document.getElementById('srTab'+k[0].toUpperCase()+k.slice(1))?.classList.toggle('active',k===tab));
  if(tab==='add'){const i=document.getElementById('srSearchInput');setTimeout(()=>i?.focus(),30);return}
+ if(tab==='feed')socialRebuildLoadFeed();
  if(tab==='friends')socialRebuildLoadFriends();
  if(tab==='requests')socialRebuildLoadRequests();
 }
@@ -1336,6 +1346,11 @@ async function socialRebuildLoadRequests(){
 async function socialRebuildAccept(id){try{const {error}=await supabaseClient.rpc('accept_friend_request',{request_id:Number(id)});if(error)throw error;await socialRebuildLoadRequests()}catch(e){alert('Erro ao aceitar: '+(e.message||e))}}
 async function socialRebuildReject(id){try{const {error}=await supabaseClient.from('friend_requests').update({status:'rejected'}).eq('id',Number(id));if(error)throw error;await socialRebuildLoadRequests()}catch(e){alert('Erro ao recusar: '+(e.message||e))}}
 function closeSocialFriendProfile(){document.getElementById('srProfileOverlay')?.classList.remove('open')}
+function socialActivityText(a){const title=srEsc(a.title||'');const map={book_finished:['▤','terminou o livro'],book_added:['▤','adicionou o livro'],game_finished:['◇','zerou o jogo'],movie_watched:['▷','assistiu ao filme']};const m=map[a.activity_type]||['•','registrou'];return {icon:m[0],html:`${m[1]} <b>${title}</b>`}}
+function socialTimeAgo(v){const t=new Date(v).getTime(),d=Math.max(0,Date.now()-t),m=Math.floor(d/60000);if(m<1)return'agora';if(m<60)return`há ${m} min`;const h=Math.floor(m/60);if(h<24)return`há ${h}h`;const days=Math.floor(h/24);if(days<7)return`há ${days}d`;return new Date(v).toLocaleDateString('pt-BR')}
+async function publishSocialActivity(type,title,metadata={}){try{const session=await socialRebuildSession();if(!session?.user||!supabaseClient)return;const {error}=await supabaseClient.from('activities').insert({user_id:session.user.id,activity_type:type,title:String(title||'').slice(0,120),metadata});if(error)console.warn('TRACK feed:',error.message)}catch(e){console.warn('TRACK feed:',e)}}
+async function socialRebuildLoadFeed(){const box=document.getElementById('srPanelFeed');if(!box)return;const session=await socialRebuildSession();if(!session?.user){box.innerHTML='<div class="friend-empty">Entre na sua conta TRACK para ver as atividades dos amigos.</div>';return}box.innerHTML='<div class="friend-empty">Carregando atividades…</div>';try{const fr=await supabaseClient.from('friendships').select('friend_id').eq('user_id',session.user.id);if(fr.error)throw fr.error;const ids=(fr.data||[]).map(x=>x.friend_id);if(!ids.length){box.innerHTML='<div class="friend-empty">Adicione amigos para começar a ver as atividades deles aqui.</div>';return}const ar=await supabaseClient.from('activities').select('id,user_id,activity_type,title,metadata,created_at').in('user_id',ids).order('created_at',{ascending:false}).limit(40);if(ar.error)throw ar.error;const acts=ar.data||[];if(!acts.length){box.innerHTML='<div class="friend-empty">Seus amigos ainda não publicaram atividades.</div>';return}const pr=await supabaseClient.from('profiles').select('id,username,display_name,avatar_url').in('id',[...new Set(acts.map(a=>a.user_id))]);if(pr.error)throw pr.error;const pm=new Map((pr.data||[]).map(p=>[p.id,p]));box.innerHTML='<div class="social-feed-head"><span>ATIVIDADES DOS SEUS AMIGOS</span><button class="social-feed-refresh" onclick="socialRebuildLoadFeed()">Atualizar</button></div>'+acts.map(a=>{const p=pm.get(a.user_id)||{},name=p.display_name||p.username||'Usuário',ini=name.split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase(),avatar=p.avatar_url?`<img src="${srEsc(p.avatar_url)}" alt="">`:srEsc(ini||'?'),txt=socialActivityText(a);return `<div class="social-feed-item"><div class="social-feed-avatar">${avatar}</div><div class="social-feed-copy"><div><strong>${srEsc(name)}</strong><span class="handle">@${srEsc(p.username||'usuario')}</span></div><div class="social-feed-text"><span class="social-feed-icon">${txt.icon}</span>${txt.html}</div><div class="social-feed-time">${socialTimeAgo(a.created_at)}</div></div></div>`}).join('')}catch(e){const missing=String(e.message||e).toLowerCase().includes('activities');box.innerHTML=`<div class="friend-empty">${missing?'O Feed está pronto no app, mas falta criar a tabela de atividades no Supabase.':'Erro ao carregar atividades: '+srEsc(e.message||e)}</div>`}}
+
 async function openSocialFriendProfile(friendId){
  const overlay=document.getElementById('srProfileOverlay'),content=document.getElementById('srProfileContent');if(!overlay||!content)return;
  overlay.classList.add('open');content.innerHTML='<div class="friend-empty">Carregando perfil…</div>';

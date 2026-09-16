@@ -467,6 +467,16 @@ body.light-theme .profile-edit-btn,body.light-theme .friend-row{background:#fff;
 
 /* TRACK 1.4 Beta — Conta Supabase */
 .account-status{display:flex;align-items:center;gap:10px;border:1px solid #292929;background:#141414;border-radius:15px;padding:12px;margin:0 0 14px}.account-dot{width:9px;height:9px;border-radius:50%;background:#666}.account-dot.online{background:#64c987}.account-copy{min-width:0;flex:1}.account-copy strong{display:block;font-size:12px}.account-copy span{display:block;color:#777;font-size:10px;margin-top:3px;overflow:hidden;text-overflow:ellipsis}.auth-msg{min-height:18px;color:#999;font-size:11px;margin-top:10px;line-height:1.45}.auth-msg.error{color:#d98282}.auth-msg.ok{color:#7fcf9a}.auth-switch{width:100%;border:0;background:transparent;color:#888;padding:10px;cursor:pointer;font-size:11px}.auth-logout{width:100%;border:1px solid #4a3030;background:#211515;color:#d99;border-radius:11px;padding:10px;cursor:pointer;margin-top:9px}body.light-theme .account-status{background:#fff;border-color:#d8d8d4}body.light-theme .auth-logout{background:#fff4f4}
+
+/* TRACK 1.4 Beta — Perfil de amigo isolado */
+.sr-profile-overlay{position:fixed;inset:0;z-index:210;background:rgba(0,0,0,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:flex;align-items:flex-end;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .24s ease,visibility .24s ease}
+.sr-profile-overlay.open{opacity:1;visibility:visible}
+.sr-profile-sheet{width:min(520px,100%);background:#121212;border:1px solid #303030;border-radius:26px 26px 20px 20px;padding:18px;transform:translateY(28px);transition:transform .3s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.sr-profile-overlay.open .sr-profile-sheet{transform:translateY(0)}
+.sr-profile-top{display:flex;justify-content:space-between;align-items:center;gap:12px}.sr-profile-top .library-detail-type{margin:0}.sr-profile-close{width:36px;height:36px;border:1px solid #303030;background:#191919;color:#aaa;border-radius:11px;cursor:pointer}
+.sr-profile-main{text-align:center;padding:18px 4px 8px}.sr-profile-avatar{width:88px;height:88px;border-radius:26px;margin:0 auto 14px;background:#202020;border:1px solid #303030;display:grid;place-items:center;font-size:27px;font-weight:800;overflow:hidden}.sr-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}.sr-profile-main h2{margin:0;font-size:28px;letter-spacing:-.04em}.sr-profile-handle{color:#777;font-size:12px;margin-top:5px}.sr-profile-bio{margin:18px 0 0;border:1px solid #292929;background:#151515;border-radius:16px;padding:15px;text-align:left;color:#aaa;font-size:12px;line-height:1.55;min-height:50px}.sr-profile-status{margin-top:10px;color:#666;font-size:10px}.sr-profile-btn{border:1px solid #303030;background:#1b1b1b;color:#ddd;border-radius:9px;padding:8px 10px;font-size:10px;cursor:pointer}
+body.light-theme .sr-profile-sheet{background:#fff;border-color:#d7d7d2}body.light-theme .sr-profile-avatar,body.light-theme .sr-profile-bio{background:#f3f3f0;border-color:#d8d8d4;color:#444}body.light-theme .sr-profile-close,body.light-theme .sr-profile-btn{background:#f2f2ef;color:#333;border-color:#d8d8d4}
+
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
@@ -490,7 +500,7 @@ body.light-theme .profile-edit-btn,body.light-theme .friend-row{background:#fff;
 </header>
 <div class="top-menu" id="topMenu" aria-label="Menu do TRACK">
   <button type="button" onclick="openAccount()"><span>↗</span><div><b>Conta</b><small id="accountMenuMeta">Entrar ou criar conta</small></div></button>
-  <button type="button" onclick="openFriends()"><span>♙</span><div><b>Amigos</b><small>Amizades e pedidos</small></div></button>
+  <button type="button" onclick="openSocialRebuild()"><span>♙</span><div><b>Amigos</b><small>Amizades e pedidos</small></div></button>
   <button type="button" onclick="openMoreSection('profile')"><span>◯</span><div><b>Perfil</b><small>Nome e informações do usuário</small></div></button>
   <button type="button" onclick="openMoreSection('stats')"><span>⌁</span><div><b>Estatísticas</b><small>Veja seu histórico geral</small></div></button>
   <button type="button" onclick="openMoreSection('goals')"><span>◎</span><div><b>Metas</b><small>Defina seus objetivos mensais</small></div></button>
@@ -509,9 +519,50 @@ body.light-theme .profile-edit-btn,body.light-theme .friend-row{background:#fff;
 
 <div class="friends-overlay" id="friendsOverlay" onclick="if(event.target===this)closeFriends()">
  <div class="friends-sheet">
-  <div class="friends-head"><div><div class="library-detail-type">TRACK SOCIAL · ONLINE · FIX 2</div><h2>Amigos</h2></div><button class="friends-close" onclick="closeFriends()">×</button></div>
-  <div class="friend-tabs"><button id="ft-friends" onclick="setFriendTab('friends')">Meus amigos</button><button id="ft-requests" onclick="setFriendTab('requests')">Pedidos <span id="requestCount"></span></button><button id="ft-add" onclick="setFriendTab('add')">Adicionar</button></div>
-  <div id="friendsContent"></div>
+  <div class="friends-head"><div><div class="library-detail-type">TRACK SOCIAL · ONLINE · FINAL TEST</div><h2>Amigos</h2></div><button class="friends-close" onclick="closeFriends()">×</button></div>
+  <div class="friend-tabs"><button id="ft-friends" type="button" onclick="setFriendTab('friends')">Meus amigos</button><button id="ft-requests" type="button" onclick="setFriendTab('requests')">Pedidos <span id="requestCount"></span></button><button id="ft-add" type="button" onclick="setFriendTab('add')">Adicionar</button></div>
+  <div id="friendsContent">
+   <div id="friendsPanelFriends"></div>
+   <div id="friendsPanelRequests" style="display:none"></div>
+  </div>
+  <div id="friendsPanelAdd" style="display:none">
+   <div class="friends-section-label">ENCONTRAR PESSOAS</div>
+   <div style="display:grid;grid-template-columns:1fr auto;gap:8px">
+    <input class="friend-search" id="friendSearch" type="search" placeholder="Digite um @usuário" autocomplete="off" spellcheck="false" style="margin-bottom:0">
+    <button class="add" id="friendSearchButton" type="button">Buscar</button>
+   </div>
+   <div id="friendSearchResults"><div class="friend-empty">Digite pelo menos 2 caracteres para pesquisar.</div></div>
+  </div>
+ </div>
+</div>
+
+
+<div class="friends-overlay" id="socialRebuildOverlay" onclick="if(event.target===this)closeSocialRebuild()">
+ <div class="friends-sheet" style="min-height:420px">
+  <div class="friends-head"><div><div class="library-detail-type">TRACK SOCIAL · REBUILD · PERFIL SEPARADO</div><h2>Amigos</h2></div><button class="friends-close" type="button" onclick="closeSocialRebuild()">×</button></div>
+  <div class="friend-tabs">
+   <button id="srTabFriends" type="button" onclick="socialRebuildTab('friends')">Meus amigos</button>
+   <button id="srTabRequests" type="button" onclick="socialRebuildTab('requests')">Pedidos <span id="srRequestCount"></span></button>
+   <button id="srTabAdd" type="button" onclick="socialRebuildTab('add')">Adicionar</button>
+  </div>
+  <div id="srPanelFriends"></div>
+  <div id="srPanelRequests" style="display:none"></div>
+  <div id="srPanelAdd" style="display:none">
+   <div class="friends-section-label">ENCONTRAR PESSOAS</div>
+   <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start">
+    <input class="friend-search" id="srSearchInput" type="text" placeholder="Digite o @usuário" autocomplete="off" spellcheck="false" style="margin:0">
+    <button class="add" type="button" onclick="socialRebuildSearch()">Buscar</button>
+   </div>
+   <div id="srSearchResults"><div class="friend-empty">Digite o @usuário e toque em Buscar.</div></div>
+  </div>
+ </div>
+</div>
+
+
+<div class="sr-profile-overlay" id="srProfileOverlay" onclick="if(event.target===this)closeSocialFriendProfile()">
+ <div class="sr-profile-sheet">
+  <div class="sr-profile-top"><div class="library-detail-type">PERFIL · TRACK SOCIAL</div><button class="sr-profile-close" type="button" onclick="closeSocialFriendProfile()">×</button></div>
+  <div id="srProfileContent"><div class="friend-empty">Carregando perfil…</div></div>
  </div>
 </div>
 
@@ -871,11 +922,11 @@ function openAccount(mode='login'){document.getElementById('topMenu')?.classList
 function renderLogin(){modal.innerHTML=`<h2>Entrar no TRACK</h2><div class="sub" style="margin:-10px 0 18px">Use sua conta para acessar os recursos sociais.</div><div class="field"><label>E-MAIL</label><input id="authEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div><div class="field"><label>SENHA</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Sua senha"></div><div id="authMsg" class="auth-msg"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="trackLogin()">Entrar</button></div><button class="auth-switch" onclick="renderSignup()">Ainda não tenho conta · Criar conta</button>`;overlay.style.display='flex'}
 function renderSignup(){const suggested=(profileHandle()||'').replace(/^@/,'').replace(/[^a-z0-9_]/g,'').slice(0,20);modal.innerHTML=`<h2>Criar conta TRACK</h2><div class="sub" style="margin:-10px 0 18px">Seu @usuário será único no TRACK.</div><div class="field"><label>NOME</label><input id="authName" maxlength="30" value="${esc(getProfileName())}" placeholder="Seu nome"></div><div class="field"><label>@USUÁRIO</label><input id="authUsername" maxlength="20" value="${esc(suggested)}" placeholder="maykon"><div class="profile-char-note">3–20 caracteres: letras minúsculas, números e _</div></div><div class="field"><label>E-MAIL</label><input id="authEmail" type="email" autocomplete="email" placeholder="voce@email.com"></div><div class="field"><label>SENHA</label><input id="authPassword" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres"></div><div id="authMsg" class="auth-msg"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="trackSignup()">Criar conta</button></div><button class="auth-switch" onclick="renderLogin()">Já tenho conta · Entrar</button>`;overlay.style.display='flex'}
 async function trackSignup(){const name=(document.getElementById('authName')?.value||'').trim().slice(0,30),username=(document.getElementById('authUsername')?.value||'').trim().toLowerCase().replace(/^@/,''),email=(document.getElementById('authEmail')?.value||'').trim(),password=document.getElementById('authPassword')?.value||'';if(!name)return authMessage('Digite seu nome.','error');if(!/^[a-z0-9_]{3,20}$/.test(username))return authMessage('Escolha um @usuário com 3–20 letras, números ou _.','error');if(!email)return authMessage('Digite seu e-mail.','error');if(password.length<6)return authMessage('A senha precisa ter pelo menos 6 caracteres.','error');authMessage('Criando sua conta…');const {data,error}=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:'https://maykonravel49-maker.github.io/TRACK/',data:{display_name:name,username}}});if(error)return authMessage(authErrorText(error),'error');localStorage.setItem('trackUserName',name);saveTrackProfile({...getTrackProfile(),handle:'@'+username});if(data.session){trackSession=data.session;await ensureCloudProfile();authMessage('Conta criada e conectada.','ok');setTimeout(()=>openAccount(),600)}else authMessage('Conta criada! Abra seu e-mail, confirme o cadastro e depois volte ao TRACK para entrar.','ok');updateGreeting();render()}
-async function trackLogin(){const email=(document.getElementById('authEmail')?.value||'').trim(),password=document.getElementById('authPassword')?.value||'';if(!email||!password)return authMessage('Preencha e-mail e senha.','error');authMessage('Entrando…');const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)return authMessage(authErrorText(error),'error');trackSession=data.session;await ensureCloudProfile();await loadSocial();closeM();refreshAccountUI();updateGreeting();render();updateFriendBadgeLocal()}
+async function trackLogin(){const email=(document.getElementById('authEmail')?.value||'').trim(),password=document.getElementById('authPassword')?.value||'';if(!email||!password)return authMessage('Preencha e-mail e senha.','error');authMessage('Entrando…');const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error)return authMessage(authErrorText(error),'error');trackSession=data.session;closeM();refreshAccountUI();updateGreeting();render();Promise.race([ensureCloudProfile(),new Promise(r=>setTimeout(()=>r(null),5000))]).catch(console.warn);Promise.race([loadSocial(),new Promise(r=>setTimeout(()=>r(null),5000))]).then(()=>updateFriendBadgeLocal()).catch(console.warn)}
 async function trackLogout(){if(!supabaseClient)return;await supabaseClient.auth.signOut();trackSession=null;social={friends:[],requests:[],sent:[]};closeM();refreshAccountUI();updateFriendBadgeLocal()}
 async function ensureCloudProfile(){if(!trackSession?.user)return null;const u=trackSession.user;let {data,error}=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').eq('id',u.id).maybeSingle();if(!data){const md=u.user_metadata||{},username=String(md.username||'').toLowerCase();if(!/^[a-z0-9_]{3,20}$/.test(username))return null;const ins=await supabaseClient.from('profiles').insert({id:u.id,username,display_name:String(md.display_name||'').slice(0,30),bio:''}).select().single();if(ins.error){console.warn('TRACK profile:',ins.error.message);return null}data=ins.data}if(data){if(data.display_name)localStorage.setItem('trackUserName',data.display_name);saveTrackProfile({...getTrackProfile(),handle:'@'+data.username,bio:data.bio||getTrackProfile().bio||'',avatar_url:data.avatar_url||null});updateGreeting();render()}return data}
 async function syncCloudProfile(name,username,bio){if(!trackSession?.user)return {ok:true};const {error}=await supabaseClient.from('profiles').update({display_name:name,username,bio}).eq('id',trackSession.user.id);if(error)return {ok:false,error};return {ok:true}}
-async function initTrackCloud(){if(!supabaseClient)return;const {data}=await supabaseClient.auth.getSession();trackSession=data.session||null;if(trackSession)await ensureCloudProfile();refreshAccountUI();supabaseClient.auth.onAuthStateChange(async(_event,session)=>{trackSession=session||null;if(trackSession)setTimeout(()=>ensureCloudProfile(),0);refreshAccountUI()})}
+async function initTrackCloud(){if(!supabaseClient)return;const {data}=await supabaseClient.auth.getSession();trackSession=data.session||null;refreshAccountUI();if(trackSession)Promise.race([ensureCloudProfile(),new Promise(r=>setTimeout(()=>r(null),5000))]).catch(console.warn);supabaseClient.auth.onAuthStateChange(async(_event,session)=>{trackSession=session||null;if(trackSession)setTimeout(()=>ensureCloudProfile(),0);refreshAccountUI()})}
 
 const APP_VERSION='1.4.0-beta';
 const DATA_SCHEMA_VERSION=1;
@@ -1234,21 +1285,73 @@ function friendAvatarHTML(p,extra=''){const url=p?.avatar_url;return `<div class
 async function requireTrackAccount(){if(trackSession?.user)return true;openAccount('login');return false}
 async function fetchProfiles(ids){ids=[...new Set((ids||[]).filter(Boolean))];if(!ids.length)return new Map();const {data,error}=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').in('id',ids);if(error){console.warn('TRACK social profiles:',error.message);return new Map()}return new Map((data||[]).map(p=>[p.id,cloudPerson(p)]))}
 async function loadSocial(){if(!supabaseClient||!trackSession?.user){social={friends:[],requests:[],sent:[]};updateFriendBadgeLocal();return social}socialLoading=true;const uid=trackSession.user.id;const [fr,inc,out]=await Promise.all([supabaseClient.from('friendships').select('friend_id').eq('user_id',uid),supabaseClient.from('friend_requests').select('id,sender_id,receiver_id,status,created_at').eq('receiver_id',uid).eq('status','pending').order('created_at',{ascending:false}),supabaseClient.from('friend_requests').select('id,sender_id,receiver_id,status,created_at').eq('sender_id',uid).eq('status','pending').order('created_at',{ascending:false})]);const ids=[...(fr.data||[]).map(x=>x.friend_id),...(inc.data||[]).map(x=>x.sender_id),...(out.data||[]).map(x=>x.receiver_id)];const profiles=await fetchProfiles(ids);social.friends=(fr.data||[]).map(x=>profiles.get(x.friend_id)).filter(Boolean);social.requests=(inc.data||[]).map(x=>({...profiles.get(x.sender_id),requestId:x.id})).filter(x=>x.id);social.sent=(out.data||[]).map(x=>({...profiles.get(x.receiver_id),requestId:x.id})).filter(x=>x.id);socialLoading=false;updateFriendBadgeLocal();return social}
-function openFriends(){document.getElementById('topMenu')?.classList.remove('open');document.getElementById('friendsOverlay')?.classList.add('open');document.body.style.overflow='hidden';friendTab='friends';setFriendTab('friends');if(!trackSession?.user)return;loadSocial().then(()=>{renderFriends()}).catch(err=>{console.error('TRACK social load:',err);const c=document.getElementById('friendsContent');if(c)c.innerHTML='<div class="friend-empty">Não foi possível carregar o Social agora. Você ainda pode tentar a aba Adicionar.</div>'})}
+function openFriends(){document.getElementById('topMenu')?.classList.remove('open');document.getElementById('friendsOverlay')?.classList.add('open');document.body.style.overflow='hidden';friendTab='friends';setFriendTab('friends');if(!trackSession?.user)return;loadSocial().then(()=>{renderFriends()}).catch(err=>{console.error('TRACK social load:',err);const pf=document.getElementById('friendsPanelFriends');if(pf)pf.innerHTML='<div class="friend-empty">Não foi possível carregar seus amigos agora. A aba Adicionar continua disponível.</div>'})}
 function closeFriends(){document.getElementById('friendsOverlay')?.classList.remove('open');document.body.style.overflow=''}
-function setFriendTab(t){friendTab=t;['friends','requests','add'].forEach(x=>document.getElementById('ft-'+x)?.classList.toggle('active',x===t));renderFriends()}
+function setFriendTab(t){
+ friendTab=t;
+ ['friends','requests','add'].forEach(x=>document.getElementById('ft-'+x)?.classList.toggle('active',x===t));
+ const pf=document.getElementById('friendsPanelFriends'),pr=document.getElementById('friendsPanelRequests'),pa=document.getElementById('friendsPanelAdd');
+ if(pf)pf.style.display=t==='friends'?'block':'none';
+ if(pr)pr.style.display=t==='requests'?'block':'none';
+ if(pa)pa.style.display=t==='add'?'block':'none';
+ if(t==='add'){bindFriendSearchStable();setTimeout(()=>document.getElementById('friendSearch')?.focus(),30);return;}
+ renderFriends();
+}
 function friendRow(p,actions='',note=''){return `<div class="friend-row">${friendAvatarHTML(p)}<div class="friend-copy"><strong>${esc(p.name)}</strong><span>${esc(p.user)}</span>${note?`<div class="friend-request-note">${esc(note)}</div>`:''}</div><div class="friend-actions">${actions}</div></div>`}
 function friendsHeader(){return `<div class="friends-hero"><div class="friends-hero-top">${friendAvatarHTML({name:getProfileName()||'T',avatar_url:getTrackProfile().avatar_url||null})}<div class="friends-hero-copy"><strong>${esc(getProfileName()||'Usuário')}</strong><span>${esc(profileHandle())} · ${social.friends.length} ${social.friends.length===1?'amigo':'amigos'}</span></div></div></div>`}
-function renderFriends(){const c=document.getElementById('friendsContent');if(!c)return;const rc=document.getElementById('requestCount');if(rc)rc.textContent=social.requests.length?`(${social.requests.length})`:'';if(!trackSession?.user){c.innerHTML='<div class="friend-empty">Você precisa entrar na sua conta TRACK para acessar o Social.<br><br><button class="add" onclick="closeFriends();openAccount(\'login\')">Entrar na conta</button></div>';return}if(friendTab==='friends'){c.innerHTML=friendsHeader()+`<div class="friends-section-label">MEUS AMIGOS</div>`+(social.friends.length?social.friends.map(p=>friendRow(p,`<button onclick="previewFriend('${p.id}')">Perfil</button>`)).join(''):'<div class="friend-empty">Sua lista ainda está vazia. Procure alguém em Adicionar.</div>');return}if(friendTab==='requests'){const incoming=`<div class="friends-section-label">PEDIDOS RECEBIDOS</div>`+(social.requests.length?social.requests.map(p=>friendRow(p,`<button class="accept" onclick="acceptFriend(${Number(p.requestId)})">Aceitar</button><button onclick="declineFriend(${Number(p.requestId)})">Recusar</button>`,'Enviou um pedido de amizade.')).join(''):'<div class="friend-empty">Nenhum pedido recebido.</div>');const sent=`<div class="friends-section-label">ENVIADOS</div>`+(social.sent.length?social.sent.map(p=>friendRow(p,'<button disabled>Pendente</button>','Aguardando resposta.')).join(''):'<div class="friend-empty">Nenhum pedido enviado.</div>');c.innerHTML=incoming+sent;return}c.innerHTML='<div class="friends-section-label">ENCONTRAR PESSOAS</div><input class="friend-search" id="friendSearch" placeholder="Digite um @usuário" autocomplete="off" oninput="queueFriendSearch(this.value)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();renderAddFriends(this.value)}"><div id="friendSearchResults"><div class="friend-empty">Digite pelo menos 2 caracteres para pesquisar.</div></div>'}
-let friendSearchTimer=null;function queueFriendSearch(q){clearTimeout(friendSearchTimer);friendSearchTimer=setTimeout(()=>renderAddFriends(q),260)}
-async function renderAddFriends(q=''){const box=document.getElementById('friendSearchResults');if(!box)return;const term=String(q).trim().toLowerCase().replace(/^@/,'');if(term.length<2){box.innerHTML='<div class="friend-empty">Digite pelo menos 2 caracteres para pesquisar.</div>';return}if(!supabaseClient||!trackSession?.user){box.innerHTML='<div class="friend-empty">Entre na sua conta TRACK para pesquisar pessoas.</div>';return}box.innerHTML='<div class="friend-empty">Pesquisando…</div>';try{const query=supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').ilike('username',`%${term}%`).neq('id',trackSession.user.id).limit(20);const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('timeout')),8000));const {data,error}=await Promise.race([query,timeout]);if(error)throw error;const friendIds=new Set(social.friends.map(x=>x.id)),incomingIds=new Set(social.requests.map(x=>x.id)),sentIds=new Set(social.sent.map(x=>x.id));const list=(data||[]).map(cloudPerson);box.innerHTML=list.length?list.map(p=>{let action=friendIds.has(p.id)?'<button disabled>Amigo</button>':sentIds.has(p.id)?'<button disabled>Enviado</button>':incomingIds.has(p.id)?'<button disabled>Recebido</button>':`<button class="accept" onclick="sendFriendRequest('${p.id}')">Adicionar</button>`;return friendRow(p,action)}).join(''):'<div class="friend-empty">Nenhum usuário encontrado.</div>'}catch(err){console.error('TRACK friend search:',err);box.innerHTML='<div class="friend-empty">Falha ao pesquisar usuários. Verifique a conexão e tente novamente.</div>'}}
+function renderFriends(){
+ const rc=document.getElementById('requestCount');if(rc)rc.textContent=social.requests.length?`(${social.requests.length})`:'';
+ const pf=document.getElementById('friendsPanelFriends'),pr=document.getElementById('friendsPanelRequests');
+ if(!trackSession?.user){if(pf)pf.innerHTML='<div class="friend-empty">Você precisa entrar na sua conta TRACK para acessar o Social.<br><br><button class="add" onclick="closeFriends();openAccount(\'login\')">Entrar na conta</button></div>';if(pr)pr.innerHTML='<div class="friend-empty">Entre na sua conta para ver pedidos.</div>';return}
+ if(pf){let head='';try{head=friendsHeader()}catch(e){console.warn(e)}pf.innerHTML=head+`<div class="friends-section-label">MEUS AMIGOS</div>`+(social.friends.length?social.friends.map(p=>friendRow(p,`<button onclick="previewFriend('${p.id}')">Perfil</button>`)).join(''):'<div class="friend-empty">Sua lista ainda está vazia. Procure alguém em Adicionar.</div>')}
+ if(pr){const incoming=`<div class="friends-section-label">PEDIDOS RECEBIDOS</div>`+(social.requests.length?social.requests.map(p=>friendRow(p,`<button class="accept" onclick="acceptFriend(${Number(p.requestId)})">Aceitar</button><button onclick="declineFriend(${Number(p.requestId)})">Recusar</button>`,'Enviou um pedido de amizade.')).join(''):'<div class="friend-empty">Nenhum pedido recebido.</div>');const sent=`<div class="friends-section-label">ENVIADOS</div>`+(social.sent.length?social.sent.map(p=>friendRow(p,'<button disabled>Pendente</button>','Aguardando resposta.')).join(''):'<div class="friend-empty">Nenhum pedido enviado.</div>');pr.innerHTML=incoming+sent}
+}
+let friendSearchTimer=null;
+function bindFriendSearchStable(){
+  const input=document.getElementById('friendSearch');
+  if(!input||input.dataset.bound==='1')return;
+  input.dataset.bound='1';
+  input.addEventListener('input',function(){
+    const q=this.value;
+    clearTimeout(friendSearchTimer);
+    const box=document.getElementById('friendSearchResults');
+    const term=q.trim().replace(/^@/,'');
+    if(term.length<2){if(box)box.innerHTML='<div class="friend-empty">Digite pelo menos 2 caracteres para pesquisar.</div>';return;}
+    if(box)box.innerHTML='<div class="friend-empty">Pesquisando…</div>';
+    friendSearchTimer=setTimeout(()=>renderAddFriends(q),350);
+  });
+  input.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();clearTimeout(friendSearchTimer);renderAddFriends(this.value)}});
+  const btn=document.getElementById('friendSearchButton');
+  if(btn && btn.dataset.bound!=='1'){btn.dataset.bound='1';btn.addEventListener('click',()=>{clearTimeout(friendSearchTimer);renderAddFriends(input.value)});}
+  input.focus();
+}
+function queueFriendSearch(q){clearTimeout(friendSearchTimer);friendSearchTimer=setTimeout(()=>renderAddFriends(q),350)}
+async function renderAddFriends(q=''){
+ const box=document.getElementById('friendSearchResults');if(!box)return;
+ const term=String(q).trim().toLowerCase().replace(/^@/,'');
+ if(term.length<2){box.innerHTML='<div class="friend-empty">Digite pelo menos 2 caracteres para pesquisar.</div>';return}
+ if(!supabaseClient){box.innerHTML='<div class="friend-empty">Conexão com o TRACK Cloud indisponível.</div>';return}
+ // recupera a sessão diretamente do Supabase caso a UI ainda não tenha atualizado trackSession
+ if(!trackSession?.user){
+   try{const r=await Promise.race([supabaseClient.auth.getSession(),new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),3000))]);trackSession=r?.data?.session||null;refreshAccountUI()}catch(e){}
+ }
+ if(!trackSession?.user){box.innerHTML='<div class="friend-empty">Sua sessão não foi encontrada. Feche esta tela e entre novamente na conta TRACK.</div>';return}
+ box.innerHTML='<div class="friend-empty">Pesquisando…</div>';
+ try{
+   const {data,error}=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').ilike('username',`%${term}%`).neq('id',trackSession.user.id).limit(20);
+   if(error)throw error;
+   const friendIds=new Set(social.friends.map(x=>x.id)),incomingIds=new Set(social.requests.map(x=>x.id)),sentIds=new Set(social.sent.map(x=>x.id));
+   const list=(data||[]).map(cloudPerson);
+   box.innerHTML=list.length?list.map(p=>{let action=friendIds.has(p.id)?'<button disabled>Amigo</button>':sentIds.has(p.id)?'<button disabled>Enviado</button>':incomingIds.has(p.id)?'<button disabled>Recebido</button>':`<button class="accept" onclick="sendFriendRequest('${p.id}')">Adicionar</button>`;return friendRow(p,action)}).join(''):'<div class="friend-empty">Nenhum usuário encontrado.</div>';
+ }catch(err){console.error('TRACK friend search:',err);box.innerHTML=`<div class="friend-empty">Erro na busca: ${esc(err?.message||'falha desconhecida')}</div>`}
+}
 async function sendFriendRequest(id){if(!(await requireTrackAccount()))return;const uid=trackSession.user.id;if(id===uid)return;const existing=await supabaseClient.from('friend_requests').select('id,sender_id,receiver_id,status').or(`and(sender_id.eq.${uid},receiver_id.eq.${id}),and(sender_id.eq.${id},receiver_id.eq.${uid})`);if(existing.error){alert('Não foi possível verificar o pedido.');return}const active=(existing.data||[]).find(x=>x.status==='pending'||x.status==='accepted');if(active){await loadSocial();renderAddFriends(document.getElementById('friendSearch')?.value||'');return}for(const old of (existing.data||[]).filter(x=>x.status==='rejected'))await supabaseClient.from('friend_requests').delete().eq('id',old.id);const {error}=await supabaseClient.from('friend_requests').insert({sender_id:uid,receiver_id:id,status:'pending'});if(error){alert(error.message.includes('duplicate')?'Esse pedido já existe.':'Não foi possível enviar o pedido.');return}await loadSocial();renderAddFriends(document.getElementById('friendSearch')?.value||'')}
 async function acceptFriend(requestId){if(!(await requireTrackAccount()))return;const {error}=await supabaseClient.rpc('accept_friend_request',{request_id:Number(requestId)});if(error){alert('Não foi possível aceitar: '+error.message);return}await loadSocial();renderFriends();render()}
 async function declineFriend(requestId){if(!(await requireTrackAccount()))return;const {error}=await supabaseClient.from('friend_requests').update({status:'rejected'}).eq('id',Number(requestId));if(error){alert('Não foi possível recusar o pedido.');return}await loadSocial();renderFriends()}
 function previewFriend(id){const p=social.friends.find(x=>x.id===id);if(!p)return;const c=document.getElementById('friendsContent');c.innerHTML=`<button class="back" onclick="setFriendTab('friends')">‹ Voltar para amigos</button><div class="friend-profile-card">${friendAvatarHTML(p)}<h3>${esc(p.name)}</h3><p>${esc(p.user)} · amigo no TRACK</p>${p.bio?`<div class="profile-bio" style="margin-top:12px!important">${esc(p.bio)}</div>`:''}</div><div class="friend-empty">A amizade já é real e online. Compartilhamento de livros, jogos, filmes e avaliações entra na próxima etapa de privacidade do perfil.</div>`}
 function updateFriendBadgeLocal(){const b=document.getElementById('friendBadge');if(!b)return;b.textContent=social.requests.length;b.classList.toggle('show',!!trackSession?.user&&social.requests.length>0)}
 async function updateFriendBadge(){if(trackSession?.user)await loadSocial();else{social={friends:[],requests:[],sent:[]};updateFriendBadgeLocal()}}
-document.addEventListener('DOMContentLoaded',()=>setTimeout(updateFriendBadge,400));
+document.addEventListener('DOMContentLoaded',()=>{setTimeout(updateFriendBadge,400);setTimeout(bindFriendSearchStable,0)});
 /* TRACK 1.4 Beta Social Fix — evita que um Service Worker antigo sirva HTML/JS em cache durante os testes. */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
@@ -1265,6 +1368,89 @@ if ('serviceWorker' in navigator) {
 }
 
 document.addEventListener('click',()=>setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages();},0));
+
+/* TRACK 1.4 Beta — Social REBUILD: módulo independente */
+function srEsc(v){return esc(String(v??''))}
+function srAvatar(p){const n=(p.display_name||p.username||'?').trim();const ini=n.split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();return `<div class="friend-avatar">${srEsc(ini||'?')}</div>`}
+function srRow(p,actions='',note=''){return `<div class="friend-row">${srAvatar(p)}<div class="friend-copy"><strong>${srEsc(p.display_name||p.username||'Usuário')}</strong><span>@${srEsc(p.username||'usuario')}</span>${note?`<div class="friend-request-note">${srEsc(note)}</div>`:''}</div><div class="friend-actions">${actions}</div></div>`}
+function openSocialRebuild(){document.getElementById('topMenu')?.classList.remove('open');document.getElementById('socialRebuildOverlay')?.classList.add('open');document.body.style.overflow='hidden';socialRebuildTab('friends')}
+function closeSocialRebuild(){document.getElementById('socialRebuildOverlay')?.classList.remove('open');document.body.style.overflow=''}
+function socialRebuildTab(tab){
+ const map={friends:'srPanelFriends',requests:'srPanelRequests',add:'srPanelAdd'};
+ Object.entries(map).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.style.display=k===tab?'block':'none'});
+ ['friends','requests','add'].forEach(k=>document.getElementById('srTab'+k[0].toUpperCase()+k.slice(1))?.classList.toggle('active',k===tab));
+ if(tab==='add'){const i=document.getElementById('srSearchInput');setTimeout(()=>i?.focus(),30);return}
+ if(tab==='friends')socialRebuildLoadFriends();
+ if(tab==='requests')socialRebuildLoadRequests();
+}
+async function socialRebuildSession(){
+ if(trackSession?.user)return trackSession;
+ if(!supabaseClient)return null;
+ try{const {data}=await supabaseClient.auth.getSession();trackSession=data?.session||null;refreshAccountUI();return trackSession}catch(e){return null}
+}
+async function socialRebuildSearch(){
+ const input=document.getElementById('srSearchInput'),box=document.getElementById('srSearchResults');
+ const term=(input?.value||'').trim().toLowerCase().replace(/^@/,'');
+ if(!box)return;if(term.length<2){box.innerHTML='<div class="friend-empty">Digite pelo menos 2 caracteres.</div>';return}
+ const session=await socialRebuildSession();if(!session?.user){box.innerHTML='<div class="friend-empty">Entre na sua conta TRACK primeiro.</div>';return}
+ box.innerHTML='<div class="friend-empty">Pesquisando…</div>';
+ try{
+  const {data,error}=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').ilike('username',`%${term}%`).neq('id',session.user.id).limit(20);
+  if(error)throw error;
+  box.innerHTML=(data&&data.length)?data.map(p=>srRow(p,`<button class="accept" type="button" onclick="socialRebuildSend('${p.id}',this)">Adicionar</button>`)).join(''):'<div class="friend-empty">Nenhum usuário encontrado.</div>';
+ }catch(e){box.innerHTML=`<div class="friend-empty">Erro na busca: ${srEsc(e.message||e)}</div>`}
+}
+async function socialRebuildSend(receiverId,btn){
+ const session=await socialRebuildSession();if(!session?.user)return alert('Entre na sua conta TRACK primeiro.');
+ if(btn){btn.disabled=true;btn.textContent='Enviando…'}
+ try{
+  const uid=session.user.id;
+  const {data:existing,error:checkErr}=await supabaseClient.from('friend_requests').select('id,sender_id,receiver_id,status').or(`and(sender_id.eq.${uid},receiver_id.eq.${receiverId}),and(sender_id.eq.${receiverId},receiver_id.eq.${uid})`);
+  if(checkErr)throw checkErr;
+  const active=(existing||[]).find(x=>x.status==='pending'||x.status==='accepted');
+  if(active){if(btn)btn.textContent=active.status==='accepted'?'Amigo':'Pendente';return}
+  for(const old of (existing||[]).filter(x=>x.status==='rejected'))await supabaseClient.from('friend_requests').delete().eq('id',old.id);
+  const {error}=await supabaseClient.from('friend_requests').insert({sender_id:uid,receiver_id:receiverId,status:'pending'});if(error)throw error;
+  if(btn)btn.textContent='Enviado ✓';socialRebuildLoadRequests();
+ }catch(e){if(btn){btn.disabled=false;btn.textContent='Adicionar'}alert('Erro ao enviar pedido: '+(e.message||e))}
+}
+async function socialRebuildLoadRequests(){
+ const box=document.getElementById('srPanelRequests'),count=document.getElementById('srRequestCount');if(!box)return;
+ const session=await socialRebuildSession();if(!session?.user){box.innerHTML='<div class="friend-empty">Entre na sua conta TRACK para ver pedidos.</div>';return}
+ box.innerHTML='<div class="friend-empty">Carregando pedidos…</div>';
+ try{
+  const uid=session.user.id;
+  const [{data:inc,error:e1},{data:sent,error:e2}]=await Promise.all([supabaseClient.from('friend_requests').select('id,sender_id,status,created_at').eq('receiver_id',uid).eq('status','pending'),supabaseClient.from('friend_requests').select('id,receiver_id,status,created_at').eq('sender_id',uid).eq('status','pending')]);if(e1)throw e1;if(e2)throw e2;
+  const ids=[...(inc||[]).map(x=>x.sender_id),...(sent||[]).map(x=>x.receiver_id)];let profiles=[];if(ids.length){const r=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').in('id',[...new Set(ids)]);if(r.error)throw r.error;profiles=r.data||[]}
+  const pm=new Map(profiles.map(p=>[p.id,p]));if(count)count.textContent=inc?.length?`(${inc.length})`:'';
+  const a=(inc&&inc.length)?inc.map(r=>srRow(pm.get(r.sender_id)||{username:'usuario'},`<button class="accept" onclick="socialRebuildAccept(${r.id})">Aceitar</button><button onclick="socialRebuildReject(${r.id})">Recusar</button>`,'Enviou um pedido de amizade.')).join(''):'<div class="friend-empty">Nenhum pedido recebido.</div>';
+  const b=(sent&&sent.length)?sent.map(r=>srRow(pm.get(r.receiver_id)||{username:'usuario'},'<button disabled>Pendente</button>','Aguardando resposta.')).join(''):'<div class="friend-empty">Nenhum pedido enviado.</div>';
+  box.innerHTML='<div class="friends-section-label">PEDIDOS RECEBIDOS</div>'+a+'<div class="friends-section-label">ENVIADOS</div>'+b;
+ }catch(e){box.innerHTML=`<div class="friend-empty">Erro ao carregar pedidos: ${srEsc(e.message||e)}</div>`}
+}
+async function socialRebuildAccept(id){try{const {error}=await supabaseClient.rpc('accept_friend_request',{request_id:Number(id)});if(error)throw error;await socialRebuildLoadRequests()}catch(e){alert('Erro ao aceitar: '+(e.message||e))}}
+async function socialRebuildReject(id){try{const {error}=await supabaseClient.from('friend_requests').update({status:'rejected'}).eq('id',Number(id));if(error)throw error;await socialRebuildLoadRequests()}catch(e){alert('Erro ao recusar: '+(e.message||e))}}
+function closeSocialFriendProfile(){document.getElementById('srProfileOverlay')?.classList.remove('open')}
+async function openSocialFriendProfile(friendId){
+ const overlay=document.getElementById('srProfileOverlay'),content=document.getElementById('srProfileContent');if(!overlay||!content)return;
+ overlay.classList.add('open');content.innerHTML='<div class="friend-empty">Carregando perfil…</div>';
+ try{
+  const session=await socialRebuildSession();if(!session?.user)throw new Error('Entre na sua conta TRACK primeiro.');
+  const rel=await supabaseClient.from('friendships').select('friend_id').eq('user_id',session.user.id).eq('friend_id',friendId).maybeSingle();
+  if(rel.error)throw rel.error;if(!rel.data)throw new Error('Este usuário não está na sua lista de amigos.');
+  const {data:p,error}=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').eq('id',friendId).single();if(error)throw error;
+  const name=p.display_name||p.username||'Usuário';const ini=name.trim().split(/\s+/).slice(0,2).map(x=>x[0]||'').join('').toUpperCase();
+  const avatar=p.avatar_url?`<img src="${srEsc(p.avatar_url)}" alt="">`:srEsc(ini||'?');
+  content.innerHTML=`<div class="sr-profile-main"><div class="sr-profile-avatar">${avatar}</div><h2>${srEsc(name)}</h2><div class="sr-profile-handle">@${srEsc(p.username||'usuario')}</div><div class="sr-profile-bio">${p.bio?srEsc(p.bio):'Este usuário ainda não adicionou uma bio.'}</div><div class="sr-profile-status">✓ Amigo no TRACK</div></div>`;
+ }catch(e){content.innerHTML=`<div class="friend-empty">Erro ao abrir perfil: ${srEsc(e.message||e)}</div>`}
+}
+async function socialRebuildLoadFriends(){
+ const box=document.getElementById('srPanelFriends');if(!box)return;const session=await socialRebuildSession();if(!session?.user){box.innerHTML='<div class="friend-empty">Entre na sua conta TRACK para acessar seus amigos.</div>';return}
+ box.innerHTML='<div class="friend-empty">Carregando amigos…</div>';
+ try{const {data,error}=await supabaseClient.from('friendships').select('friend_id').eq('user_id',session.user.id);if(error)throw error;const ids=(data||[]).map(x=>x.friend_id);if(!ids.length){box.innerHTML='<div class="friend-empty">Você ainda não adicionou ninguém.</div>';return}const r=await supabaseClient.from('profiles').select('id,username,display_name,bio,avatar_url').in('id',ids);if(r.error)throw r.error;box.innerHTML=(r.data||[]).map(p=>srRow(p,`<button class="sr-profile-btn" type="button" onclick="openSocialFriendProfile('${p.id}')">Perfil</button>`)).join('')||'<div class="friend-empty">Você ainda não adicionou ninguém.</div>'}catch(e){box.innerHTML=`<div class="friend-empty">Erro ao carregar amigos: ${srEsc(e.message||e)}</div>`}
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement?.id==='srSearchInput'){e.preventDefault();socialRebuildSearch()}});
+
 </script>
 
 <nav class="bottom-nav" aria-label="Navegação principal">
@@ -1274,6 +1460,8 @@ document.addEventListener('click',()=>setTimeout(()=>{renderCoverShelf();renderG
   <button data-bottom-page="games" onclick="go('games')"><span class="nav-icon">◇</span><span class="nav-text">Jogos</span></button>
   <button data-bottom-page="activities" onclick="go('activities')"><span class="nav-icon">＋</span><span class="nav-text">Atividades</span></button>
 </nav>
+
+
 
 </body>
 </html>

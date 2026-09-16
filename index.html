@@ -370,6 +370,22 @@ body.light-theme .media-card{background:#fff;border-color:#d9d9d5}
 body.light-theme .cover-action{background:#f0f0ed;color:#222;border-color:#d3d3cf}
 
 
+/* TRACK 1.3 — Light theme keeps each section accent */
+body.light-theme[data-active-page="home"]::before{background:radial-gradient(circle at 50% 16%,rgba(0,0,0,.035),transparent 52%)!important}
+body.light-theme[data-active-page="books"]::before{background:radial-gradient(circle at 50% 16%,rgba(67,120,215,.12),transparent 55%)!important}
+body.light-theme[data-active-page="money"]::before{background:radial-gradient(circle at 50% 16%,rgba(47,154,91,.11),transparent 55%)!important}
+body.light-theme[data-active-page="games"]::before{background:radial-gradient(circle at 50% 16%,rgba(132,86,205,.12),transparent 55%)!important}
+body.light-theme[data-active-page="activities"]::before,body.light-theme[data-active-page="more"]::before{background:radial-gradient(circle at 50% 16%,rgba(221,139,43,.11),transparent 55%)!important}
+body.light-theme[data-active-page="movies"]::before{background:radial-gradient(circle at 50% 16%,rgba(218,91,123,.11),transparent 55%)!important}
+body.light-theme[data-active-page="customActivity"]::before{background:radial-gradient(circle at 50% 16%,rgba(221,139,43,.08),transparent 55%)!important}
+
+body.light-theme .bottom-nav button[data-bottom-page="books"].active{background:rgba(67,120,215,.13)!important;color:#254f99!important;box-shadow:inset 0 0 0 1px rgba(67,120,215,.16)!important}
+body.light-theme .bottom-nav button[data-bottom-page="money"].active{background:rgba(47,154,91,.12)!important;color:#247345!important;box-shadow:inset 0 0 0 1px rgba(47,154,91,.15)!important}
+body.light-theme .bottom-nav button[data-bottom-page="home"].active{background:#e7e7e3!important;color:#111!important;box-shadow:inset 0 0 0 1px #d7d7d2!important}
+body.light-theme .bottom-nav button[data-bottom-page="games"].active{background:rgba(132,86,205,.13)!important;color:#6940a7!important;box-shadow:inset 0 0 0 1px rgba(132,86,205,.16)!important}
+body.light-theme .bottom-nav button[data-bottom-page="activities"].active{background:rgba(221,139,43,.13)!important;color:#9a5d17!important;box-shadow:inset 0 0 0 1px rgba(221,139,43,.16)!important}
+
+
 /* TRACK 1.2.1 — Configurações em Mais */
 .settings-panel{border:1px solid #292929;background:#141414;border-radius:19px;overflow:hidden;margin-bottom:24px}
 .settings-row{width:100%;border:0;background:transparent;color:#eee;display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;text-align:left;padding:14px 16px;cursor:pointer}
@@ -379,6 +395,49 @@ body.light-theme .cover-action{background:#f0f0ed;color:#222;border-color:#d3d3c
 body.light-theme .settings-panel{background:#fff;border-color:#d9d9d5}
 body.light-theme .settings-row{color:#151515}body.light-theme .settings-row+.settings-row{border-color:#e3e3df}
 body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#555}
+
+
+/* TRACK 1.3 — metas, perfil, estatísticas e retrospectiva */
+.profile-card{border:1px solid #292929;background:linear-gradient(145deg,#181818,#111);border-radius:22px;padding:20px;display:flex;align-items:center;gap:15px;margin:18px 0}
+.profile-avatar{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:#202020;border:1px solid #303030;font-size:20px;font-weight:800}.profile-card strong{font-size:18px}.profile-card span{display:block;color:#777;font-size:11px;margin-top:4px}
+.stats-all-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stats-all-card{border:1px solid #292929;background:#141414;border-radius:17px;padding:15px}.stats-all-card span{display:block;color:#666;font-size:9px;letter-spacing:.1em}.stats-all-card strong{display:block;font-size:24px;margin-top:9px;letter-spacing:-.04em}
+.goals-panel,.retro-card{border:1px solid #292929;background:#141414;border-radius:19px;padding:16px}.goal-setting{display:grid;grid-template-columns:1fr 105px;gap:12px;align-items:center;padding:10px 0}.goal-setting+.goal-setting{border-top:1px solid #222}.goal-setting label{font-size:12px}.goal-setting input{width:100%;background:#0d0d0d;color:#eee;border:1px solid #333;border-radius:10px;padding:9px;text-align:right}.goals-save{width:100%;margin-top:10px;border:1px solid #444;background:#eee;color:#080808;border-radius:11px;padding:10px;font-weight:700;cursor:pointer}
+.retro-head{display:flex;justify-content:space-between;align-items:end;gap:10px}.retro-year{font-size:30px;font-weight:800}.retro-copy{color:#777;font-size:11px}.retro-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}.retro-stat{background:#191919;border:1px solid #292929;border-radius:13px;padding:12px}.retro-stat b{display:block;font-size:20px}.retro-stat span{font-size:9px;color:#666}.inline-cover{width:42px;height:58px;border-radius:8px;object-fit:cover;background:#1b1b1b;flex:0 0 auto}.row-with-cover{display:flex;align-items:center;gap:12px;min-width:0}.game-card-new .inline-game-cover{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;margin-bottom:13px;background:#1b1b1b}.movie-cover-row{display:flex;align-items:center;gap:12px;min-width:0}
+.light-theme .profile-card,.light-theme .goals-panel,.light-theme .retro-card,.light-theme .stats-all-card{background:#fff;border-color:#d8d8d4}.light-theme .profile-avatar,.light-theme .retro-stat{background:#f1f1ee;border-color:#ddd}.light-theme .goal-setting input{background:#fff;color:#111;border-color:#ccc}
+@media(max-width:520px){.goal-setting{grid-template-columns:1fr 90px}}
+
+/* TRACK 1.3 — Collections unification */
+.collection-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.collection-tile{border:1px solid #292929;background:#141414;color:#eee;border-radius:19px;padding:17px;text-align:left;cursor:pointer;transition:.18s;min-width:0}
+.collection-tile:hover{transform:translateY(-2px);border-color:#3a3a3a}.collection-tile .collection-icon{font-size:18px;color:#777;margin-bottom:20px}.collection-tile strong{display:block;font-size:24px}.collection-tile span{display:block;font-size:10px;color:#666;margin-top:5px}
+.library-grid{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(145px,1fr))!important;gap:12px!important}.library-card{position:relative;background:#141414;border:1px solid #292929;border-radius:18px;padding:9px;min-width:0}.library-card .media-cover{aspect-ratio:2/3}.library-card.game .media-cover{aspect-ratio:3/4}.library-info{padding:3px 3px 5px}.library-info strong{display:block;font-size:13px;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.library-info span{display:block;color:#666;font-size:10px;margin-top:4px;line-height:1.35}.library-actions{display:flex;gap:5px;margin-top:9px}.library-actions button{flex:1;border:1px solid #303030;background:#191919;color:#999;border-radius:8px;padding:7px 5px;font-size:9px;cursor:pointer}.library-actions .danger{flex:0 0 30px}.collection-hub{margin:8px 0 26px}.collection-hub-title{font-size:10px;letter-spacing:.14em;color:#666;margin-bottom:11px}.collection-hub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.collection-hub-card{border:1px solid #292929;background:linear-gradient(145deg,#171717,#121212);color:#eee;border-radius:18px;padding:16px;text-align:left;cursor:pointer}.collection-hub-card b{display:block;font-size:21px;margin-top:18px}.collection-hub-card span{display:block;color:#666;font-size:10px;margin-top:4px}
+.gallery-manager,#coverShelf{display:none!important}
+body.light-theme .collection-tile,body.light-theme .library-card,body.light-theme .collection-hub-card{background:#fff;color:#151515;border-color:#d9d9d5}body.light-theme .library-actions button{background:#f1f1ee;color:#555;border-color:#d7d7d2}
+@media(max-width:600px){.collection-strip,.collection-hub-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.collection-tile{padding:13px}.collection-tile strong{font-size:20px}.collection-hub-card{padding:13px}.library-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+
+
+/* TRACK 1.3 — menu superior + hub de atividades */
+.top-actions{display:flex;align-items:center;gap:8px}.more-dots{width:40px;height:40px;border:1px solid #303030;background:#151515;color:#ddd;border-radius:12px;font-weight:800;letter-spacing:2px;cursor:pointer}.top-menu{position:fixed;z-index:90;top:72px;right:max(18px,calc((100vw - 1100px)/2 + 18px));width:min(310px,calc(100vw - 28px));padding:8px;background:rgba(17,17,17,.97);border:1px solid #303030;border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.45);backdrop-filter:blur(18px);display:none}.top-menu.open{display:grid}.top-menu button{display:grid;grid-template-columns:34px 1fr;gap:10px;text-align:left;align-items:center;border:0;background:transparent;color:#eee;padding:11px;border-radius:12px;cursor:pointer}.top-menu button:hover{background:#202020}.top-menu button>span{width:32px;height:32px;border:1px solid #303030;border-radius:9px;display:grid;place-items:center;color:#888}.top-menu b{display:block;font-size:12px}.top-menu small{display:block;color:#666;font-size:9px;margin-top:3px}.activity-feature-card{border:1px solid #292929;background:linear-gradient(145deg,#181818,#111);border-radius:20px;padding:18px;display:grid;grid-template-columns:46px 1fr auto;gap:13px;align-items:center;cursor:pointer;margin-top:20px}.activity-feature-icon{width:46px;height:46px;border:1px solid #303030;background:#1d1d1d;border-radius:13px;display:grid;place-items:center;color:#999;font-size:19px}.activity-feature-card strong{display:block;font-size:15px}.activity-feature-card span{display:block;color:#666;font-size:10px;margin-top:4px}.activity-feature-card>b{font-size:22px;color:#555}body[data-theme="light"] .more-dots{background:#fff;color:#222;border-color:#ddd}body[data-theme="light"] .top-menu{background:rgba(255,255,255,.98);border-color:#ddd}body[data-theme="light"] .top-menu button{color:#222}body[data-theme="light"] .top-menu button:hover{background:#f2f2f2}body[data-theme="light"] .activity-feature-card{background:#fff;border-color:#ddd}
+
+/* TRACK 1.3 — Biblioteca detalhada */
+.library-cover-button{display:block;width:100%;padding:0;border:0;background:transparent;color:inherit;cursor:pointer;border-radius:12px;overflow:hidden;transform:translateZ(0)}
+.library-cover-button .media-cover{transition:transform .32s cubic-bezier(.2,.75,.25,1),filter .25s ease}
+.library-cover-button:hover .media-cover{transform:scale(1.025);filter:brightness(1.06)}
+.library-cover-button:active .media-cover{transform:scale(.985)}
+.library-detail-overlay{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:flex-end;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .28s ease,visibility .28s ease}
+.library-detail-overlay.open{opacity:1;visibility:visible}
+.library-detail{width:min(620px,100%);max-height:min(82vh,760px);overflow:auto;background:#121212;border:1px solid #303030;border-radius:26px 26px 20px 20px;padding:18px;transform:translateY(34px) scale(.98);opacity:.7;transition:transform .36s cubic-bezier(.2,.8,.2,1),opacity .3s ease;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.library-detail-overlay.open .library-detail{transform:translateY(0) scale(1);opacity:1}
+.library-detail-top{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:end}
+.library-detail-cover{width:100%;aspect-ratio:2/3;border-radius:17px;overflow:hidden;background:#1b1b1b}.library-detail-cover.game{aspect-ratio:3/4}.library-detail-cover .media-cover{height:100%}
+.library-detail-type{font-size:9px;letter-spacing:.15em;color:#666;margin-bottom:8px}.library-detail h2{font-size:clamp(24px,5vw,38px);letter-spacing:-.045em;margin:0 0 7px}.library-detail-meta{color:#777;font-size:12px;line-height:1.5}
+.library-detail-progress{margin-top:18px}.library-detail-progress-head{display:flex;justify-content:space-between;font-size:11px;color:#777;margin-bottom:8px}.library-detail-progress-track{height:7px;background:#252525;border-radius:99px;overflow:hidden}.library-detail-progress-fill{height:100%;background:#aaa;border-radius:99px;transition:width .5s ease}
+.library-detail-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}.library-detail-actions button{border:1px solid #303030;background:#1b1b1b;color:#ddd;border-radius:12px;padding:11px;cursor:pointer}.library-detail-actions .primary{background:#eee;color:#111;border-color:#eee}.library-detail-actions .danger{color:#b77}.library-detail-close{position:sticky;top:0;float:right;width:36px;height:36px;border:1px solid #303030;background:#191919;color:#aaa;border-radius:11px;cursor:pointer;z-index:2}
+body.light-theme .library-detail{background:#fff;border-color:#d7d7d2;box-shadow:0 30px 80px rgba(0,0,0,.18)}body.light-theme .library-detail-actions button,body.light-theme .library-detail-close{background:#f2f2ef;color:#333;border-color:#d8d8d4}body.light-theme .library-detail-actions .primary{background:#181818;color:#fff;border-color:#181818}body.light-theme .library-detail-progress-track{background:#e5e5e1}
+@media(max-width:520px){.library-detail-overlay{padding:10px}.library-detail{padding:14px;border-radius:23px 23px 17px 17px}.library-detail-top{grid-template-columns:112px 1fr;gap:14px}.library-detail-actions{grid-template-columns:1fr}}
+
+/* TRACK 1.3 — Avaliação pessoal */
+.library-review{margin-top:20px;border-top:1px solid #252525;padding-top:18px}.library-review-label{font-size:9px;letter-spacing:.14em;color:#666;margin-bottom:10px}.star-rating{display:flex;gap:5px;margin-bottom:13px}.star-rating button{border:0;background:transparent;color:#484848;font-size:28px;line-height:1;padding:0 2px;cursor:pointer;transition:transform .15s ease,color .15s ease}.star-rating button.on{color:#e8c56b}.star-rating button:hover{transform:scale(1.12)}.review-text{width:100%;min-height:105px;resize:vertical;border:1px solid #303030;background:#0d0d0d;color:#eee;border-radius:13px;padding:12px;font:inherit;font-size:13px;line-height:1.5;outline:none}.review-text:focus{border-color:#555}.review-save{margin-top:9px;width:100%;border:1px solid #303030;background:#eee;color:#111;border-radius:12px;padding:11px;font-weight:700;cursor:pointer}.review-saved{font-size:10px;color:#777;margin-top:8px;text-align:center;min-height:14px}.library-card-stars{font-size:11px;color:#e8c56b;letter-spacing:1px;margin-top:5px;min-height:13px}body.light-theme .library-review{border-color:#e2e2de}body.light-theme .review-text{background:#f7f7f4;color:#222;border-color:#d7d7d2}body.light-theme .review-save{background:#181818;color:#fff;border-color:#181818}
 
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
@@ -393,7 +452,20 @@ body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#5
 </head>
 <body data-active-page="home">
 <div class="app">
-<header class="top"><div class="logo">TRACK</div><div class="beta">1.2.1</div></header>
+<header class="top">
+  <div class="logo">TRACK</div>
+  <div class="top-actions">
+    <div class="beta">1.3</div>
+    <button class="more-dots" type="button" aria-label="Abrir menu" title="Menu" onclick="toggleTopMenu(event)">•••</button>
+  </div>
+</header>
+<div class="top-menu" id="topMenu" aria-label="Menu do TRACK">
+  <button type="button" onclick="openMoreSection('profile')"><span>◯</span><div><b>Perfil</b><small>Nome e informações do usuário</small></div></button>
+  <button type="button" onclick="openMoreSection('stats')"><span>⌁</span><div><b>Estatísticas</b><small>Veja seu histórico geral</small></div></button>
+  <button type="button" onclick="openMoreSection('goals')"><span>◎</span><div><b>Metas</b><small>Defina seus objetivos mensais</small></div></button>
+  <button type="button" onclick="openMoreSection('recap')"><span>✦</span><div><b>Retrospectiva</b><small>Relembre seu ano no TRACK</small></div></button>
+  <button type="button" onclick="openMoreSection('settings')"><span>⚙</span><div><b>Configurações</b><small>Nome, tema e preferências</small></div></button>
+</div>
 
 
 <main>
@@ -438,6 +510,13 @@ body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#5
 
   <div class="home-section-title">Continue de onde parou</div>
   <div class="continue-card" id="continueArea"></div>
+
+  <div class="home-section-title">Sua coleção</div>
+  <div class="collection-strip">
+    <button class="collection-tile" onclick="go('books')"><div class="collection-icon">▤</div><strong id="collectionBooks">0</strong><span>LIVROS</span></button>
+    <button class="collection-tile" onclick="go('games')"><div class="collection-icon">◇</div><strong id="collectionGames">0</strong><span>JOGOS</span></button>
+    <button class="collection-tile" onclick="go('movies')"><div class="collection-icon">▷</div><strong id="collectionMovies">0</strong><span>FILMES</span></button>
+  </div>
 
   <div class="home-section-title">Estatística fixada</div>
   <div class="pin-stat-card">
@@ -496,17 +575,43 @@ body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#5
 
 <section id="more" class="page">
   <div class="heading more-heading">
-    <div><div class="eyebrow">PERSONALIZE O TRACK</div><h1>Mais.</h1><div class="sub">Suas outras atividades e ferramentas em um só lugar.</div></div>
+    <div><div class="eyebrow">PERSONALIZE O TRACK</div><h1>Mais.</h1><div class="sub">Coleções, atividades, perfil e preferências em um só lugar.</div></div>
     <button class="add" onclick="openCustomActivity()">+ Nova atividade</button>
   </div>
 
-  <div class="more-feature-grid">
-    <button class="more-feature" onclick="go('movies')">
-      <div class="more-feature-icon">▷</div><div><strong>Filmes</strong><span id="moreMovieMeta">Seus filmes vistos</span></div><b>›</b>
-    </button>
+  <div class="collection-hub" style="display:none">
+    <div class="collection-hub-title">COLEÇÕES</div>
+    <div class="collection-hub-grid">
+      <button class="collection-hub-card" onclick="go('books')">▤<b id="hubBooks">0</b><span>Livros</span></button>
+      <button class="collection-hub-card" onclick="go('games')">◇<b id="hubGames">0</b><span>Jogos</span></button>
+      <button class="collection-hub-card" onclick="go('movies')">▷<b id="hubMovies">0</b><span>Filmes</span></button>
+    </div>
   </div>
 
-  <div class="more-label">CONFIGURAÇÕES</div>
+  <div id="more-profile" class="more-label">PERFIL</div>
+  <div class="profile-card"><div class="profile-avatar" id="profileAvatar">T</div><div><strong id="profileDisplayName">Usuário</strong><span>Seu espaço pessoal no TRACK</span></div></div>
+
+  <div id="more-stats" class="more-label">ESTATÍSTICAS GERAIS</div>
+  <div class="stats-all-grid">
+    <div class="stats-all-card"><span>LIVROS</span><strong id="allBooks">0</strong></div><div class="stats-all-card"><span>PÁGINAS</span><strong id="allPages">0</strong></div>
+    <div class="stats-all-card"><span>JOGOS</span><strong id="allGames">0</strong></div><div class="stats-all-card"><span>HORAS JOGADAS</span><strong id="allHours">0h</strong></div>
+    <div class="stats-all-card"><span>FILMES</span><strong id="allMovies">0</strong></div><div class="stats-all-card"><span>GASTOS REGISTRADOS</span><strong id="allMoney">R$ 0</strong></div>
+  </div>
+
+  <div id="more-goals" class="more-label">METAS MENSAIS</div>
+  <div class="goals-panel">
+    <div class="goal-setting"><label>Livros lidos</label><input id="goalBooksInput" type="number" min="0"></div>
+    <div class="goal-setting"><label>Páginas lidas</label><input id="goalPagesInput" type="number" min="0"></div>
+    <div class="goal-setting"><label>Jogos zerados</label><input id="goalGamesInput" type="number" min="0"></div>
+    <div class="goal-setting"><label>Filmes vistos</label><input id="goalMoviesInput" type="number" min="0"></div>
+    <div class="goal-setting"><label>Limite de gastos (R$)</label><input id="goalMoneyInput" type="number" min="0" step="0.01"></div>
+    <button class="goals-save" onclick="saveTrackGoals()">Salvar metas</button>
+  </div>
+
+  <div id="more-retro" class="more-label">RETROSPECTIVA</div>
+  <div class="retro-card" id="retroCard"></div>
+
+  <div id="more-settings" class="more-label">CONFIGURAÇÕES</div>
   <div class="settings-panel">
     <button class="settings-row" onclick="openChangeName()">
       <div class="settings-icon">Aa</div><div class="settings-copy"><strong>Trocar nome</strong><span id="profileNameMeta">Personalize sua saudação</span></div><b>›</b>
@@ -516,7 +621,12 @@ body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#5
     </button>
   </div>
 
-  <div class="more-label">ATIVIDADES PERSONALIZADAS</div>
+</section>
+
+<section id="activities" class="page">
+  <div class="heading more-heading"><div><div class="eyebrow">SEU ESPAÇO</div><h1>Atividades.</h1><div class="sub">Filmes e tudo o que você quiser acompanhar.</div></div><button class="add" onclick="openCustomActivity()">+ Nova atividade</button></div>
+  <div class="activity-feature-card" onclick="go('movies')"><div class="activity-feature-icon">▷</div><div><strong>Filmes</strong><span id="activityMovieMeta">Sua coleção de filmes vistos</span></div><b>›</b></div>
+  <div class="more-label">SUAS ATIVIDADES</div>
   <div class="custom-activities" id="customActivities"></div>
 </section>
 
@@ -543,10 +653,11 @@ body.light-theme .settings-icon{background:#f2f2ef;border-color:#d8d8d4;color:#5
 </section>
 
 </main>
-<div class="note">TRACK 1.2.1 · seus dados ficam salvos neste dispositivo.</div>
+<div class="note">TRACK 1.3 · seus dados ficam salvos neste dispositivo.</div>
 </div>
 
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="library-detail-overlay" id="libraryDetailOverlay" onclick="if(event.target===this)closeLibraryItem()"><div class="library-detail" id="libraryDetail"></div></div>
 <script>
 
 
@@ -700,7 +811,7 @@ async function removeItemCover(type,index){
    Futuras versões: altere APP_VERSION e adicione migrações
    sem apagar os dados já salvos pelo usuário.
    ========================================================= */
-const APP_VERSION='1.2.0';
+const APP_VERSION='1.3.0';
 const DATA_SCHEMA_VERSION=1;
 function runMigrations(state){
   // Espaço reservado para migrações futuras (1.1, 1.2, 2.0...)
@@ -957,10 +1068,78 @@ function addCustomEntry(){
 function deleteCustomEntry(id){s.customEntries=s.customEntries.filter(x=>x.id!==id);save();render()}
 function togglePinMenu(){document.getElementById('pinMenu')?.classList.toggle('open')}
 function setPinnedStat(v){localStorage.setItem('trackPinnedStat',v);document.getElementById('pinMenu')?.classList.remove('open');render()}
+
+function saveTrackGoals(){
+ s.bookGoal=Math.max(0,+document.getElementById('goalBooksInput').value||0);
+ s.pageGoal=Math.max(0,+document.getElementById('goalPagesInput').value||0);
+ s.gameGoal=Math.max(0,+document.getElementById('goalGamesInput').value||0);
+ s.movieGoal=Math.max(0,+document.getElementById('goalMoviesInput').value||0);
+ s.moneyGoal=Math.max(0,+document.getElementById('goalMoneyInput').value||0);
+ save();render();alert('Metas salvas.');
+}
+function renderTrack13(){
+ const name=(localStorage.getItem('trackUserName')||'Usuário').trim();
+ const pd=document.getElementById('profileDisplayName'),pa=document.getElementById('profileAvatar'); if(pd)pd.textContent=name;if(pa)pa.textContent=(name[0]||'T').toUpperCase();
+ const sum=(a,f)=>a.reduce((t,x)=>t+(+f(x)||0),0);
+ const vals={allBooks:(s.books||[]).length,allPages:sum(s.books||[],x=>x.read),allGames:(s.games||[]).length,allHours:sum(s.games||[],x=>x.hours),allMovies:(s.movies||[]).length};
+ Object.entries(vals).forEach(([id,v])=>{let e=document.getElementById(id);if(e)e.textContent=id==='allHours'?v.toLocaleString('pt-BR',{maximumFractionDigits:1})+'h':v.toLocaleString('pt-BR')});
+ let am=document.getElementById('allMoney');if(am)am.textContent=fmt(sum(s.money||[],x=>x.value));
+ [['goalBooksInput',s.bookGoal??10],['goalPagesInput',s.pageGoal??1000],['goalGamesInput',s.gameGoal??3],['goalMoviesInput',s.movieGoal??4],['goalMoneyInput',s.moneyGoal??0]].forEach(([id,v])=>{let e=document.getElementById(id);if(e&&document.activeElement!==e)e.value=v});
+ const y=s.year, prefix=y+'-'; const yb=(s.books||[]).filter(x=>(x.month||'').startsWith(prefix)), yg=(s.games||[]).filter(x=>(x.month||'').startsWith(prefix)), ym=(s.movies||[]).filter(x=>(x.month||'').startsWith(prefix)), ymo=(s.money||[]).filter(x=>(x.month||'').startsWith(prefix));
+ let retro=document.getElementById('retroCard');if(retro)retro.innerHTML=`<div class="retro-head"><div><div class="eyebrow">SEU ANO NO TRACK</div><div class="retro-year">${y}</div></div><div class="retro-copy">Uma visão do que você registrou até agora.</div></div><div class="retro-grid"><div class="retro-stat"><b>${yb.length}</b><span>LIVROS</span></div><div class="retro-stat"><b>${sum(yb,x=>x.read).toLocaleString('pt-BR')}</b><span>PÁGINAS</span></div><div class="retro-stat"><b>${yg.length}</b><span>JOGOS</span></div><div class="retro-stat"><b>${ym.length}</b><span>FILMES</span></div><div class="retro-stat"><b>${sum(yg,x=>x.hours).toLocaleString('pt-BR',{maximumFractionDigits:1})}h</b><span>JOGADAS</span></div><div class="retro-stat"><b>${fmt(sum(ymo,x=>x.value))}</b><span>GASTOS</span></div></div>`;
+}
+
+function renderUnifiedCollections(){
+ const k=key();
+ const books=(s.books||[]).filter(x=>x.month===k),games=(s.games||[]).filter(x=>x.month===k),movies=(s.movies||[]).filter(x=>x.month===k);
+ const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v};
+ set('collectionBooks',books.length);set('collectionGames',games.length);set('collectionMovies',movies.length);
+ set('hubBooks',(s.books||[]).length);set('hubGames',(s.games||[]).length);set('hubMovies',(s.movies||[]).length);
+ const bl=document.getElementById('bookList'); if(bl){bl.classList.add('library-grid');bl.innerHTML=books.length?books.map(x=>{let i=s.books.indexOf(x),pc=x.pages?Math.min(100,Math.round((x.read||0)/x.pages*100)):0;return `<div class="library-card"><button class="library-cover-button" onclick="openLibraryItem('book',${i})" aria-label="Abrir detalhes de ${esc(x.name||'Livro')}">${galleryCoverHTML(x,'book')}</button><div class="library-info"><strong>${esc(x.name||'Livro')}</strong><span>${esc(x.author||'Autor não informado')} · ${x.read||0}/${x.pages||0} pág. · ${pc}%</span><div class="library-actions"><button onclick="setItemCover('book',${i})">${x.coverKey?'Trocar capa':'Capa'}</button><button class="danger" onclick="deleteBook(${i})">×</button></div></div></div>`}).join(''):'<div class="empty" style="grid-column:1/-1">Nenhum livro registrado neste mês.</div>'}
+ const gl=document.getElementById('gameList'); if(gl){gl.classList.add('library-grid');gl.innerHTML=games.length?games.slice().reverse().map(x=>{let i=s.games.indexOf(x);return `<div class="library-card game"><button class="library-cover-button" onclick="openLibraryItem('game',${i})" aria-label="Abrir detalhes de ${esc(x.name||'Jogo')}">${galleryCoverHTML(x,'game')}</button><div class="library-info"><strong>${esc(x.name||'Jogo')}</strong><span>${esc(x.platform||'Plataforma não informada')} · ${x.hours||0}h${x.rating?' · '+x.rating+'/10':''}</span><div class="library-actions"><button onclick="setItemCover('game',${i})">${x.coverKey?'Trocar capa':'Capa'}</button><button class="danger" onclick="deleteGame(${i})">×</button></div></div></div>`}).join(''):'<div class="empty" style="grid-column:1/-1">Nenhum jogo zerado neste mês.</div>'}
+ const ml=document.getElementById('movieList'); if(ml){ml.classList.add('library-grid');ml.innerHTML=movies.length?movies.slice().reverse().map(x=>{let i=s.movies.indexOf(x);return `<div class="library-card"><button class="library-cover-button" onclick="openLibraryItem('movie',${i})" aria-label="Abrir detalhes de ${esc(x.name||'Filme')}">${galleryCoverHTML(x,'movie')}</button><div class="library-info"><strong>${esc(x.name||'Filme')}</strong><span>${x.year?x.year+' · ':''}${x.minutes||0} min${x.rating?' · '+x.rating+'/10':''}</span><div class="library-actions"><button onclick="setItemCover('movie',${i})">${x.coverKey?'Trocar capa':'Capa'}</button><button class="danger" onclick="deleteMovie(${i})">×</button></div></div></div>`}).join(''):'<div class="empty" style="grid-column:1/-1">Nenhum filme registrado neste mês.</div>'}
+ hydrateCoverImages();
+}
+
+function libraryArray(type){return type==='book'?s.books:type==='game'?s.games:s.movies}
+function libraryTypeName(type){return type==='book'?'LIVRO':type==='game'?'JOGO':'FILME'}
+function openLibraryItem(type,index){
+ const arr=libraryArray(type),x=arr[index];if(!x)return;
+ const box=document.getElementById('libraryDetail'),ov=document.getElementById('libraryDetailOverlay');if(!box||!ov)return;
+ let meta='',progress='';
+ if(type==='book'){
+   const pc=x.pages?Math.min(100,Math.round((x.read||0)/x.pages*100)):0;
+   meta=`${esc(x.author||'Autor não informado')} · ${x.pages||0} páginas`;
+   progress=`<div class="library-detail-progress"><div class="library-detail-progress-head"><span>PROGRESSO DE LEITURA</span><b>${x.read||0} / ${x.pages||0} pág. · ${pc}%</b></div><div class="library-detail-progress-track"><div class="library-detail-progress-fill" style="width:${pc}%"></div></div></div>`;
+ }else if(type==='game') meta=`${esc(x.platform||'Plataforma não informada')} · ${x.hours||0} horas${x.rating?' · Nota '+x.rating+'/10':''}`;
+ else meta=`${x.year?x.year+' · ':''}${x.minutes||0} min${x.rating?' · Nota '+x.rating+'/10':''}`;
+ const stars=[1,2,3,4,5].map(n=>`<button type="button" class="${(x.reviewRating||0)>=n?'on':''}" onclick="setMediaReviewRating('${type}',${index},${n})" aria-label="${n} estrela${n>1?'s':''}">★</button>`).join('');
+ box.innerHTML=`<button class="library-detail-close" onclick="closeLibraryItem()">×</button><div class="library-detail-top"><div class="library-detail-cover ${type==='game'?'game':''}">${galleryCoverHTML(x,type)}</div><div><div class="library-detail-type">${libraryTypeName(type)} · TRACK</div><h2>${esc(x.name||'Sem título')}</h2><div class="library-detail-meta">${meta}</div>${progress}</div></div><div class="library-review"><div class="library-review-label">MINHA AVALIAÇÃO</div><div class="star-rating">${stars}</div><div class="library-review-label">O QUE EU ACHEI</div><textarea class="review-text" id="mediaReviewText" maxlength="1200" placeholder="Escreva suas impressões sobre ${type==='book'?'este livro':type==='game'?'este jogo':'este filme'}...">${esc(x.reviewText||'')}</textarea><button class="review-save" onclick="saveMediaReview('${type}',${index})">Salvar avaliação</button><div class="review-saved" id="reviewSaved"></div></div><div class="library-detail-actions"><button class="primary" onclick="changeLibraryCover('${type}',${index})">${x.coverKey?'Trocar capa':'Adicionar capa'}</button><button onclick="closeLibraryItem()">Fechar</button><button class="danger" onclick="deleteLibraryFromDetail('${type}',${index})">Excluir da biblioteca</button></div>`;
+ ov.classList.add('open');document.body.style.overflow='hidden';setTimeout(()=>hydrateCoverImages(box),0);
+}
+function setMediaReviewRating(type,index,rating){const x=libraryArray(type)[index];if(!x)return;x.reviewRating=rating;save();openLibraryItem(type,index)}
+function saveMediaReview(type,index){const x=libraryArray(type)[index];if(!x)return;const t=document.getElementById('mediaReviewText');x.reviewText=(t?.value||'').trim();save();const msg=document.getElementById('reviewSaved');if(msg){msg.textContent='Avaliação salva.';setTimeout(()=>{if(msg)msg.textContent=''},1400)}render();}
+
+function closeLibraryItem(){const ov=document.getElementById('libraryDetailOverlay');if(ov)ov.classList.remove('open');document.body.style.overflow='';}
+async function changeLibraryCover(type,index){await setItemCover(type,index);openLibraryItem(type,index)}
+function deleteLibraryFromDetail(type,index){
+ const label=type==='book'?'este livro':type==='game'?'este jogo':'este filme';if(!confirm('Excluir '+label+'?'))return;
+ const arr=libraryArray(type),x=arr[index];if(x?.coverKey)deleteCover(x.coverKey).catch(()=>{});arr.splice(index,1);save();closeLibraryItem();render();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLibraryItem()});
+
+const _trackRender=render;
+render=function(){_trackRender();renderTrack13();renderUnifiedCollections();setTimeout(()=>{hydrateCoverImages();},0)};
 render();
+renderTrack13();
 applyTheme(localStorage.getItem('trackTheme')||'dark');
 ensureNameSetup();
 setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages();},0);
+
+
+function toggleTopMenu(ev){ if(ev)ev.stopPropagation(); const m=document.getElementById('topMenu'); if(m)m.classList.toggle('open'); }
+function openMoreSection(section){ const m=document.getElementById('topMenu');if(m)m.classList.remove('open');go('more');setTimeout(()=>{const el=document.getElementById('more-'+section);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},80);}
+document.addEventListener('click',e=>{const m=document.getElementById('topMenu');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.more-dots'))m.classList.remove('open');});
 
 /* PWA: mantém o app instalável e prepara atualizações futuras. */
 if ('serviceWorker' in navigator) {
@@ -977,7 +1156,7 @@ document.addEventListener('click',()=>setTimeout(()=>{renderCoverShelf();renderG
   <button data-bottom-page="money" onclick="go('money')"><span class="nav-icon">$</span><span class="nav-text">Finanças</span></button>
   <button data-bottom-page="home" class="active home-center" onclick="go('home')"><span class="nav-icon">⌂</span><span class="nav-text">Início</span></button>
   <button data-bottom-page="games" onclick="go('games')"><span class="nav-icon">◇</span><span class="nav-text">Jogos</span></button>
-  <button data-page="more" onclick="go('more')"><span class="nav-icon">＋</span><span class="nav-text">Mais</span></button>
+  <button data-bottom-page="activities" onclick="go('activities')"><span class="nav-icon">＋</span><span class="nav-text">Atividades</span></button>
 </nav>
 
 </body>

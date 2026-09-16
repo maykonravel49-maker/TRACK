@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TRACK — 1.5 Beta Social Feed</title>
+<title>TRACK — 1.5.1 Beta Social Feed</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080808;color:#eee;font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
 .app{max-width:1100px;margin:auto;padding:24px 18px 60px}.top{height:60px;border-bottom:1px solid #252525;display:flex;align-items:center;justify-content:space-between}.logo{font-size:21px;font-weight:800;letter-spacing:-1px}.beta{font:10px monospace;color:#777;border:1px solid #333;padding:5px 8px}
@@ -477,6 +477,12 @@ body.light-theme .profile-edit-btn,body.light-theme .friend-row{background:#fff;
 .sr-profile-main{text-align:center;padding:18px 4px 8px}.sr-profile-avatar{width:88px;height:88px;border-radius:26px;margin:0 auto 14px;background:#202020;border:1px solid #303030;display:grid;place-items:center;font-size:27px;font-weight:800;overflow:hidden}.sr-profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}.sr-profile-main h2{margin:0;font-size:28px;letter-spacing:-.04em}.sr-profile-handle{color:#777;font-size:12px;margin-top:5px}.sr-profile-bio{margin:18px 0 0;border:1px solid #292929;background:#151515;border-radius:16px;padding:15px;text-align:left;color:#aaa;font-size:12px;line-height:1.55;min-height:50px}.sr-profile-status{margin-top:10px;color:#666;font-size:10px}.sr-profile-btn{border:1px solid #303030;background:#1b1b1b;color:#ddd;border-radius:9px;padding:8px 10px;font-size:10px;cursor:pointer}
 body.light-theme .sr-profile-sheet{background:#fff;border-color:#d7d7d2}body.light-theme .sr-profile-avatar,body.light-theme .sr-profile-bio{background:#f3f3f0;border-color:#d8d8d4;color:#444}body.light-theme .sr-profile-close,body.light-theme .sr-profile-btn{background:#f2f2ef;color:#333;border-color:#d8d8d4}
 
+
+/* TRACK 1.5 Beta — Feed social */
+.social-feed-item{display:grid;grid-template-columns:44px 1fr;gap:11px;align-items:start;border:1px solid #292929;background:#151515;border-radius:16px;padding:12px;margin-bottom:9px}
+.social-feed-avatar{width:44px;height:44px;border-radius:14px;background:#202020;border:1px solid #303030;display:grid;place-items:center;font-weight:800;overflow:hidden}.social-feed-avatar img{width:100%;height:100%;object-fit:cover}
+.social-feed-copy{min-width:0}.social-feed-copy strong{font-size:13px}.social-feed-copy .handle{color:#666;font-size:10px;margin-left:5px}.social-feed-text{font-size:12px;color:#aaa;margin-top:5px;line-height:1.45}.social-feed-text b{color:#eee}.social-feed-time{font-size:9px;color:#5f5f5f;margin-top:7px}.social-feed-icon{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid #303030;border-radius:7px;margin-right:6px;color:#888}.social-feed-refresh{border:1px solid #303030;background:#1b1b1b;color:#bbb;border-radius:10px;padding:8px 10px;font-size:10px;cursor:pointer}.social-feed-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 0 12px}.social-feed-head span{font-size:10px;color:#666}.social-feed-note{border:1px dashed #303030;border-radius:14px;padding:13px;color:#777;font-size:10px;line-height:1.5;margin-bottom:10px}
+body.light-theme .social-feed-item{background:#fff;border-color:#d8d8d4}body.light-theme .social-feed-avatar{background:#f1f1ee;border-color:#ddd}body.light-theme .social-feed-text{color:#555}body.light-theme .social-feed-text b{color:#111}body.light-theme .social-feed-refresh{background:#f2f2ef;color:#444;border-color:#d8d8d4}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
@@ -484,12 +490,6 @@ body.light-theme .sr-profile-sheet{background:#fff;border-color:#d7d7d2}body.lig
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0e0f12">
 <meta name="apple-mobile-web-app-capable" content="yes">
-
-/* TRACK 1.5 Beta — Feed social */
-.social-feed-item{display:grid;grid-template-columns:44px 1fr;gap:11px;align-items:start;border:1px solid #292929;background:#151515;border-radius:16px;padding:12px;margin-bottom:9px}
-.social-feed-avatar{width:44px;height:44px;border-radius:14px;background:#202020;border:1px solid #303030;display:grid;place-items:center;font-weight:800;overflow:hidden}.social-feed-avatar img{width:100%;height:100%;object-fit:cover}
-.social-feed-copy{min-width:0}.social-feed-copy strong{font-size:13px}.social-feed-copy .handle{color:#666;font-size:10px;margin-left:5px}.social-feed-text{font-size:12px;color:#aaa;margin-top:5px;line-height:1.45}.social-feed-text b{color:#eee}.social-feed-time{font-size:9px;color:#5f5f5f;margin-top:7px}.social-feed-icon{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid #303030;border-radius:7px;margin-right:6px;color:#888}.social-feed-refresh{border:1px solid #303030;background:#1b1b1b;color:#bbb;border-radius:10px;padding:8px 10px;font-size:10px;cursor:pointer}.social-feed-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 0 12px}.social-feed-head span{font-size:10px;color:#666}.social-feed-note{border:1px dashed #303030;border-radius:14px;padding:13px;color:#777;font-size:10px;line-height:1.5;margin-bottom:10px}
-body.light-theme .social-feed-item{background:#fff;border-color:#d8d8d4}body.light-theme .social-feed-avatar{background:#f1f1ee;border-color:#ddd}body.light-theme .social-feed-text{color:#555}body.light-theme .social-feed-text b{color:#111}body.light-theme .social-feed-refresh{background:#f2f2ef;color:#444;border-color:#d8d8d4}
 
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="TRACK">
@@ -500,7 +500,7 @@ body.light-theme .social-feed-item{background:#fff;border-color:#d8d8d4}body.lig
 <header class="top">
   <div class="logo">TRACK</div>
   <div class="top-actions">
-    <div class="beta">1.4 BETA</div>
+    <div class="beta">1.5.1 BETA</div>
     <button class="search-btn" type="button" aria-label="Buscar" title="Buscar" onclick="openGlobalSearch()">⌕</button>
     <button class="more-dots" type="button" aria-label="Abrir menu" title="Menu" onclick="toggleTopMenu(event)">•••<span class="friend-badge" id="friendBadge"></span></button>
   </div>
@@ -526,7 +526,7 @@ body.light-theme .social-feed-item{background:#fff;border-color:#d8d8d4}body.lig
 
 <div class="friends-overlay" id="socialRebuildOverlay" onclick="if(event.target===this)closeSocialRebuild()">
  <div class="friends-sheet" style="min-height:420px">
-  <div class="friends-head"><div><div class="library-detail-type">TRACK SOCIAL · REBUILD · PERFIL SEPARADO</div><h2>Amigos</h2></div><button class="friends-close" type="button" onclick="closeSocialRebuild()">×</button></div>
+  <div class="friends-head"><div><h2>Amigos</h2></div><button class="friends-close" type="button" onclick="closeSocialRebuild()">×</button></div>
   <div class="friend-tabs" style="grid-template-columns:repeat(4,1fr)">
    <button id="srTabFeed" type="button" onclick="socialRebuildTab('feed')">Atividades</button>
    <button id="srTabFriends" type="button" onclick="socialRebuildTab('friends')">Amigos</button>

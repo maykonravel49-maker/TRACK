@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TRACK — 1.5.1 Beta Social Feed</title>
+<title>TRACK — 1.5.2 Beta Social Feed</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#080808;color:#eee;font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
 .app{max-width:1100px;margin:auto;padding:24px 18px 60px}.top{height:60px;border-bottom:1px solid #252525;display:flex;align-items:center;justify-content:space-between}.logo{font-size:21px;font-weight:800;letter-spacing:-1px}.beta{font:10px monospace;color:#777;border:1px solid #333;padding:5px 8px}
@@ -484,8 +484,20 @@ body.light-theme .sr-profile-sheet{background:#fff;border-color:#d7d7d2}body.lig
 .social-feed-copy{min-width:0}.social-feed-copy strong{font-size:13px}.social-feed-copy .handle{color:#666;font-size:10px;margin-left:5px}.social-feed-text{font-size:12px;color:#aaa;margin-top:5px;line-height:1.45}.social-feed-text b{color:#eee}.social-feed-time{font-size:9px;color:#5f5f5f;margin-top:7px}.social-feed-icon{display:inline-grid;place-items:center;width:22px;height:22px;border:1px solid #303030;border-radius:7px;margin-right:6px;color:#888}.social-feed-refresh{border:1px solid #303030;background:#1b1b1b;color:#bbb;border-radius:10px;padding:8px 10px;font-size:10px;cursor:pointer}.social-feed-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 0 12px}.social-feed-head span{font-size:10px;color:#666}.social-feed-note{border:1px dashed #303030;border-radius:14px;padding:13px;color:#777;font-size:10px;line-height:1.5;margin-bottom:10px}
 body.light-theme .social-feed-item{background:#fff;border-color:#d8d8d4}body.light-theme .social-feed-avatar{background:#f1f1ee;border-color:#ddd}body.light-theme .social-feed-text{color:#555}body.light-theme .social-feed-text b{color:#111}body.light-theme .social-feed-refresh{background:#f2f2ef;color:#444;border-color:#d8d8d4}
 
-/* TRACK 1.5.2 — Mini calendário de gastos */
-.money-date-picker{margin-top:6px}.money-date-display{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#090909;color:#eee;border:1px solid #333;padding:11px 12px;cursor:pointer;text-align:left}.money-date-display span:last-child{font-size:18px;color:#888}.mini-calendar{display:none;margin-top:8px;border:1px solid #303030;background:#0d0d0d;padding:12px;border-radius:14px}.mini-calendar.open{display:block}.mini-cal-head{display:grid;grid-template-columns:38px 1fr 38px;align-items:center;gap:7px;margin-bottom:9px}.mini-cal-head button{height:36px;border:1px solid #303030;background:#171717;color:#ddd;border-radius:9px;cursor:pointer}.mini-cal-title{text-align:center;font-size:12px;font-weight:700;text-transform:capitalize}.mini-cal-week,.mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.mini-cal-week span{text-align:center;color:#666;font-size:9px;padding:4px 0}.mini-cal-day{aspect-ratio:1;border:0;background:transparent;color:#bbb;border-radius:9px;cursor:pointer;min-width:0;padding:0}.mini-cal-day:hover:not(:disabled){background:#1e1e1e}.mini-cal-day.today{box-shadow:inset 0 0 0 1px #555}.mini-cal-day.selected{background:#eee;color:#111;font-weight:800}.mini-cal-day:disabled{color:#393939;cursor:not-allowed}.mini-cal-day.blank{visibility:hidden}.money-date-hidden{display:none}.light-theme .money-date-display,.light-theme .mini-calendar{background:#fafaf8;color:#222;border-color:#ccc}.light-theme .mini-cal-head button{background:#f0f0ed;color:#333;border-color:#d3d3cf}.light-theme .mini-cal-day{color:#444}.light-theme .mini-cal-day:hover:not(:disabled){background:#ecece8}.light-theme .mini-cal-day.selected{background:#181818;color:#fff}.light-theme .mini-cal-day:disabled{color:#c7c7c2}
+/* TRACK 1.5.2 — edição rápida de páginas lidas */
+.book-read-editor{margin-top:14px;border:1px solid #292929;background:#161616;border-radius:15px;padding:12px}
+.book-read-editor-label{font-size:9px;letter-spacing:.13em;color:#666;margin-bottom:9px}
+.book-read-editor-controls{display:grid;grid-template-columns:48px 42px minmax(86px,1fr) 42px 48px;gap:6px}
+.book-read-editor-controls button,.book-read-editor-controls input{min-width:0;height:38px;border:1px solid #303030;background:#1b1b1b;color:#ddd;border-radius:10px;text-align:center}
+.book-read-editor-controls button{cursor:pointer;font-size:11px}
+.book-read-editor-controls input{width:100%;font-weight:750;outline:none}
+.book-read-editor-controls input:focus{border-color:#666}
+.book-read-exact{width:100%;margin-top:7px;height:38px;border:1px solid #303030;background:#eee;color:#111;border-radius:10px;font-weight:700;cursor:pointer}
+body.light-theme .book-read-editor{background:#f7f7f4;border-color:#deded9}
+body.light-theme .book-read-editor-controls button,body.light-theme .book-read-editor-controls input{background:#fff;color:#222;border-color:#d8d8d4}
+body.light-theme .book-read-exact{background:#181818;color:#fff;border-color:#181818}
+@media(max-width:420px){.book-read-editor-controls{grid-template-columns:44px 38px minmax(72px,1fr) 38px 44px;gap:4px}}
+
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
@@ -920,7 +932,7 @@ async function ensureCloudProfile(){if(!trackSession?.user)return null;const u=t
 async function syncCloudProfile(name,username,bio){if(!trackSession?.user)return {ok:true};const {error}=await supabaseClient.from('profiles').update({display_name:name,username,bio}).eq('id',trackSession.user.id);if(error)return {ok:false,error};return {ok:true}}
 async function initTrackCloud(){if(!supabaseClient)return;const {data}=await supabaseClient.auth.getSession();trackSession=data.session||null;refreshAccountUI();if(trackSession)Promise.race([ensureCloudProfile(),new Promise(r=>setTimeout(()=>r(null),5000))]).catch(console.warn);supabaseClient.auth.onAuthStateChange(async(_event,session)=>{trackSession=session||null;if(trackSession)setTimeout(()=>ensureCloudProfile(),0);refreshAccountUI()})}
 
-const APP_VERSION='1.5.0-beta';
+const APP_VERSION='1.5.2-beta';
 const DATA_SCHEMA_VERSION=1;
 function runMigrations(state){
   // Espaço reservado para migrações futuras (1.1, 1.2, 2.0...)
@@ -1135,17 +1147,8 @@ async function pickPendingCover(){
 }
 function openBook(){pendingCoverKey='';modal.innerHTML=`<h2>Adicionar livro</h2><div class="field"><label>TÍTULO</label><input id="f1"></div><div class="field"><label>AUTOR</label><input id="f2"></div><div class="field"><label>TOTAL DE PÁGINAS</label><input id="f3" type="number" min="0"></div><div class="field"><label>PÁGINAS LIDAS</label><input id="f4" type="number" min="0"></div>${coverPickerField()}<div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addBook()">Salvar</button></div>`;overlay.style.display='flex'}
 function addBook(){let n=f1.value.trim(),p=+f3.value||0,r=Math.min(+f4.value||0,p);if(!n)return;s.books.push({coverKey:pendingCoverKey,name:n,author:f2.value.trim(),pages:p,read:r,month:key()});pendingCoverKey='';save();publishSocialActivity(r>=p&&p>0?'book_finished':'book_added',n,{author:f2.value.trim()});closeM();render();setTimeout(()=>{renderCoverShelf();renderGalleryManagers();hydrateCoverImages()},0)}
-function localDateISO(date=new Date()){const y=date.getFullYear(),m=String(date.getMonth()+1).padStart(2,'0'),d=String(date.getDate()).padStart(2,'0');return `${y}-${m}-${d}`}
-function brDateFromISO(iso){const [y,m,d]=String(iso||'').split('-');return y&&m&&d?`${d}/${m}/${y}`:new Date().toLocaleDateString('pt-BR')}
-let moneyCalendarView=null;
-function moneyDateLabel(iso){const [y,m,d]=iso.split('-').map(Number);return new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'long',year:'numeric'}).format(new Date(y,m-1,d))}
-function openMoney(){const today=localDateISO();moneyCalendarView=new Date();moneyCalendarView.setDate(1);modal.innerHTML=`<h2>Adicionar gasto</h2><div class="field"><label>DESCRIÇÃO</label><input id="f1" placeholder="Ex.: Mercado"></div><div class="field"><label>VALOR</label><input id="f2" type="number" step=".01" min="0" placeholder="0,00"></div><div class="field"><label>CATEGORIA</label><input id="f3" placeholder="Ex.: Alimentação"></div><div class="field money-date-picker"><label>DATA DO GASTO</label><input id="moneyDate" class="money-date-hidden" type="hidden" value="${today}"><button class="money-date-display" type="button" onclick="toggleMoneyCalendar()"><span id="moneyDateLabel">${moneyDateLabel(today)}</span><span>▦</span></button><div id="moneyMiniCalendar" class="mini-calendar"></div><div class="profile-char-note">Toque na data e escolha o dia no calendário.</div></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMoney()">Salvar</button></div>`;overlay.style.display='flex';renderMoneyCalendar()}
-function toggleMoneyCalendar(){const cal=document.getElementById('moneyMiniCalendar');if(!cal)return;cal.classList.toggle('open');if(cal.classList.contains('open'))renderMoneyCalendar()}
-function shiftMoneyCalendar(delta){if(!moneyCalendarView)return;moneyCalendarView=new Date(moneyCalendarView.getFullYear(),moneyCalendarView.getMonth()+delta,1);const now=new Date();if(moneyCalendarView>new Date(now.getFullYear(),now.getMonth(),1))moneyCalendarView=new Date(now.getFullYear(),now.getMonth(),1);renderMoneyCalendar()}
-function selectMoneyDate(iso){const input=document.getElementById('moneyDate'),label=document.getElementById('moneyDateLabel');if(input)input.value=iso;if(label)label.textContent=moneyDateLabel(iso);document.getElementById('moneyMiniCalendar')?.classList.remove('open')}
-function renderMoneyCalendar(){const box=document.getElementById('moneyMiniCalendar');if(!box||!moneyCalendarView)return;const y=moneyCalendarView.getFullYear(),m=moneyCalendarView.getMonth(),today=localDateISO(),selected=document.getElementById('moneyDate')?.value||today;const first=new Date(y,m,1),days=new Date(y,m+1,0).getDate(),offset=first.getDay();const monthName=new Intl.DateTimeFormat('pt-BR',{month:'long',year:'numeric'}).format(first);const now=new Date(),nextDisabled=y===now.getFullYear()&&m===now.getMonth();let cells='';for(let i=0;i<offset;i++)cells+='<button type="button" class="mini-cal-day blank" disabled></button>';for(let d=1;d<=days;d++){const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,future=iso>today;cells+=`<button type="button" class="mini-cal-day${iso===today?' today':''}${iso===selected?' selected':''}" ${future?'disabled':''} onclick="selectMoneyDate('${iso}')">${d}</button>`}box.innerHTML=`<div class="mini-cal-head"><button type="button" onclick="shiftMoneyCalendar(-1)">‹</button><div class="mini-cal-title">${monthName}</div><button type="button" ${nextDisabled?'disabled':''} onclick="shiftMoneyCalendar(1)">›</button></div><div class="mini-cal-week"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div><div class="mini-cal-grid">${cells}</div>`}
-
-function addMoney(){let d=f1.value.trim(),v=+f2.value||0,iso=document.getElementById('moneyDate')?.value||localDateISO();if(!d||v<=0)return;if(iso>localDateISO())return alert('Escolha a data de hoje ou uma data anterior.');const dt=new Date(iso+'T12:00:00');if(Number.isNaN(dt.getTime()))return alert('Escolha uma data válida.');const expenseMonth=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;s.money.push({desc:d,value:v,cat:f3.value.trim(),date:brDateFromISO(iso),dateISO:iso,month:expenseMonth});save();closeM();s.year=dt.getFullYear();s.month=dt.getMonth();render()}
+function openMoney(){modal.innerHTML=`<h2>Adicionar gasto</h2><div class="field"><label>DESCRIÇÃO</label><input id="f1" placeholder="Ex.: Mercado"></div><div class="field"><label>VALOR</label><input id="f2" type="number" step=".01" min="0" placeholder="0,00"></div><div class="field"><label>CATEGORIA</label><input id="f3" placeholder="Ex.: Alimentação"></div><div class="modal-actions"><button onclick="closeM()">Cancelar</button><button class="save" onclick="addMoney()">Salvar</button></div>`;overlay.style.display='flex'}
+function addMoney(){let d=f1.value.trim(),v=+f2.value||0;if(!d||v<=0)return;s.money.push({desc:d,value:v,cat:f3.value.trim(),date:new Date().toLocaleDateString('pt-BR'),month:key()});save();closeM();render()}
 function deleteBook(i){if(confirm('Excluir este livro?')){s.books.splice(i,1);save();render()}}
 function deleteMoney(i){if(confirm('Excluir este gasto?')){s.money.splice(i,1);save();render()}}
 
@@ -1237,7 +1240,7 @@ function openLibraryItem(type,index){
  if(type==='book'){
    const pc=x.pages?Math.min(100,Math.round((x.read||0)/x.pages*100)):0;
    meta=`${esc(x.author||'Autor não informado')} · ${x.pages||0} páginas`;
-   progress=`<div class="library-detail-progress"><div class="library-detail-progress-head"><span>PROGRESSO DE LEITURA</span><b>${x.read||0} / ${x.pages||0} pág. · ${pc}%</b></div><div class="library-detail-progress-track"><div class="library-detail-progress-fill" style="width:${pc}%"></div></div></div>`;
+   progress=`<div class="library-detail-progress"><div class="library-detail-progress-head"><span>PROGRESSO DE LEITURA</span><b>${x.read||0} / ${x.pages||0} pág. · ${pc}%</b></div><div class="library-detail-progress-track"><div class="library-detail-progress-fill" style="width:${pc}%"></div></div><div class="book-read-editor"><div class="book-read-editor-label">PÁGINAS LIDAS</div><div class="book-read-editor-controls"><button type="button" onclick="changeBookRead(${index},-10)">−10</button><button type="button" onclick="changeBookRead(${index},-1)">−1</button><input id="bookReadExact" type="number" inputmode="numeric" min="0" max="${x.pages||0}" value="${x.read||0}" aria-label="Páginas lidas"><button type="button" onclick="changeBookRead(${index},1)">+1</button><button type="button" onclick="changeBookRead(${index},10)">+10</button></div><button type="button" class="book-read-exact" onclick="saveBookReadExact(${index})">Salvar número exato</button></div></div>`;
  }else if(type==='game') meta=`${esc(x.platform||'Plataforma não informada')} · ${x.hours||0} horas${x.rating?' · Nota '+x.rating+'/10':''}`;
  else meta=`${x.year?x.year+' · ':''}${x.minutes||0} min${x.rating?' · Nota '+x.rating+'/10':''}`;
  const stars=[1,2,3,4,5].map(n=>`<button type="button" class="${(x.reviewRating||0)>=n?'on':''}" onclick="setMediaReviewRating('${type}',${index},${n})" aria-label="${n} estrela${n>1?'s':''}">★</button>`).join('');
@@ -1246,6 +1249,23 @@ function openLibraryItem(type,index){
 }
 function setMediaReviewRating(type,index,rating){const x=libraryArray(type)[index];if(!x)return;x.reviewRating=rating;save();openLibraryItem(type,index)}
 function saveMediaReview(type,index){const x=libraryArray(type)[index];if(!x)return;const t=document.getElementById('mediaReviewText');x.reviewText=(t?.value||'').trim();save();const msg=document.getElementById('reviewSaved');if(msg){msg.textContent='Avaliação salva.';setTimeout(()=>{if(msg)msg.textContent=''},1400)}render();}
+
+
+function setBookRead(index,value){
+ const x=s.books[index];if(!x)return;
+ const total=Math.max(0,Number(x.pages)||0);
+ x.read=Math.max(0,Math.min(total,Math.round(Number(value)||0)));
+ save();render();openLibraryItem('book',index);
+}
+function changeBookRead(index,delta){
+ const x=s.books[index];if(!x)return;
+ setBookRead(index,(Number(x.read)||0)+delta);
+}
+function saveBookReadExact(index){
+ const input=document.getElementById('bookReadExact');
+ if(!input)return;
+ setBookRead(index,input.value);
+}
 
 function closeLibraryItem(){const ov=document.getElementById('libraryDetailOverlay');if(ov)ov.classList.remove('open');document.body.style.overflow='';}
 async function changeLibraryCover(type,index){await setItemCover(type,index);openLibraryItem(type,index)}
